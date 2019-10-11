@@ -1,0 +1,18 @@
+#1 #using the results from the bash command challenge, realised I can print all results using one line of code rather than individual lines of code.
+find ../Data -name '*.fasta'|xargs wc -l 
+
+
+#2 #from the result of the first question, wanted to print everything below the first line
+cat ../Data/E.coli.fasta | tail -78103
+
+
+#3 #since we are trying to find the sequence length, want to count the total number of characters in the file
+cat ../Data/E.coli.fasta | tail -78103 | wc -m
+
+
+#4 #want to find how many times "ATGC" is repeated in the genome
+grep -o -i  ATGC ../Data/E.coli.fasta | wc -l
+
+
+#5 # want to find the ratio of AT/CG
+echo $(grep -o [A,T] ../Data/E.coli.fasta | wc -l ) / $(grep -o [C,G] ../Data/E.coli.fasta.txt | wc -l) | bc -l

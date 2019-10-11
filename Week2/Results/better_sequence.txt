@@ -1,0 +1,8 @@
+Best sequence:
+ CAATTCGGAT
+ ATCGCCGGATTACGGG
+ 5
+Best sequence:
+ .......CAATTCGGAT
+ ATCGCCGGATTACGGG
+ 5
