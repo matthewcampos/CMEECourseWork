@@ -11,7 +11,7 @@ def is_an_oak(name):
     #print("The result is:", name.lower().startswith('quercus'))
     #return name.lower().startswith('quercus')
 
-    """ Returns True if name it starts with 'quercus' 
+    """ Returns True if name it starts with 'quercus'
 
     >>> is_an_oak('Fagus sylvatica')
     False
@@ -30,11 +30,14 @@ def is_an_oak(name):
 
     """
     #Question 4
-    if re.match('^quer?cuss?$', name, flags=re.I) !=None: #re.match is used to account for case of q's and only one extra s
+    if re.match('^quer?cuss?$', name, flags=re.I) !=None:
+        #re expressions sets the different posibilities of typos that will still match the condition
+        #re.I makes it case insensitive
+        #!= sets the conditional--> there is a value 
         return True
     else:
         return False
-            
+
 def main(argv):
     f = open('../Data/TestOaksData.csv','r')
     g = open('../Data/JustOaksData.csv','w')
@@ -59,5 +62,3 @@ if (__name__ == "__main__"):
     status = main(sys.argv)
 
 doctest.testmod()
-
-
