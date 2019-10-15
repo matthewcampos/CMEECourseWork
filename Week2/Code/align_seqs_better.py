@@ -10,7 +10,6 @@
 seq1="ATCGCCGGATTACGGG"
 seq2="CAATTCGGAT"
 
-
 # Assign the longer sequence s1, and the shorter to s2
 # l1 is length of the longest, l2 that of the shortest
 
@@ -38,11 +37,11 @@ def calculate_score(s1, s2, l1, l2, startpoint):
                 matched = matched + "-"
 
     # some formatted output
-    #print("." * startpoint + matched)
-    #print("." * startpoint + s2)
-    #print(s1)
-    #print(score)
-    #print(" ")
+    print("." * startpoint + matched)
+    print("." * startpoint + s2)
+    print(s1)
+    print(score)
+    print(" ")
 
     return score
 
@@ -68,8 +67,6 @@ for i in range(l1): # Note that you just take the last alignment with the highes
         offset.append((i,z))
 print(offset)
 
-import os
-print(os.getcwd())
-with open('/Users/MatthewCampos/Documents/CMEECourseWork/Week2/Results/better_sequence.txt', 'w') as f: #defines data path and makes a new text file called better_sequence
+with open('../Results/better_sequence.txt', 'w') as f: #defines data path and makes a new text file called better_sequence
     for construct in offset:
-        f.write('Best sequence:\n {}\n {}\n {}\n'.format("."*construct[0]+s2, s1, my_best_score)) #takes in multiple argument
+        f.write('Best sequence:\n {}\n {}\n {}\n'.format("."*construct[0]+s2, s1, my_best_score)) #takes in multiple argument and "."*construct[0]+s2 prints the alignment
