@@ -1,5 +1,7 @@
 import csv
 
+"""opens a csv file and finds the best alignment and saves it in a separate file"""
+
 # Read a file containing:
 f = open('../data/sequences.csv','r')
 
@@ -27,6 +29,7 @@ else:
 # A function that computes a score by returning the number of matches starting
 # from arbitrary startpoint (chosen by user)
 def calculate_score(s1, s2, l1, l2, startpoint):
+    """computes the score of the different startpoint possibilities"""
     matched = "" # to hold string displaying alignements
     score = 0
     for i in range(l2):

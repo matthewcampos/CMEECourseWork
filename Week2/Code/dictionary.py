@@ -1,3 +1,5 @@
+"""Writing a script to populate a dictionary by extracting data"""
+
 taxa = [ ('Myotis lucifugus','Chiroptera'),
          ('Gerbillus henleyi','Rodentia',),
          ('Peromyscus crinitus', 'Rodentia'),

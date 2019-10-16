@@ -1,5 +1,7 @@
 import sys
 
+"""takes the fasta sequences from Week1 and aligns them"""
+
 def open_fasta(x):
     """Imports fasta files"""
     with open(x, "r") as f:
@@ -21,6 +23,7 @@ def open_fasta(x):
 # from arbitrary startpoint (chosen by user)
 
 def set_variables(fasta1,fasta2):
+    """Sets the variables based on sequence length"""
         l1 = len(fasta1)
         l2 = len(fasta2)
         print("lengths: l1={} l2={}".format(l1, l2))
@@ -34,6 +37,7 @@ def set_variables(fasta1,fasta2):
         return s1,s2,l1,l2
 
 def calculate_score(s1, s2, l1, l2, startpoint):
+    """computes the score of the different startpoint possibilities"""
     matched = "" # to hold string displaying alignements
     score = 0
     for i in range(l2):

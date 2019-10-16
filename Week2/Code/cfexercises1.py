@@ -56,6 +56,7 @@ def foo_6(x):
     return facto
 
 def main(argv):
+    """Tries each Foo_ function with different arguments"""
     print(foo_1(12))
     print(foo_2(10,2))
     print(foo_3(10,2,5))

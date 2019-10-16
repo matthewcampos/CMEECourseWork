@@ -27,7 +27,7 @@ Practicals:
 * align_seqs.py- practical that opens a csv file and finds the best alignment and saves it in a separate file (best_sequence.txt in Results directory)
 * align_seqs_fasta.py- extra credit that takes the fasta sequences from Week1 and aligns them. Saves in Results directory
 * align_seqs_better.py- extra extra credit that saves all the best alignments rather than just one. Saves in Results directory
-* oaks_debugme.py
+* oaks_debugme.py- practice with debugging and fixing code
 
 **Data**
 * testcsv.csv

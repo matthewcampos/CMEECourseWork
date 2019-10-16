@@ -1,3 +1,5 @@
+"""practice with debugging and fixing code"""
+
 import csv
 import sys
 import re
@@ -33,18 +35,19 @@ def is_an_oak(name):
     if re.match('^quer?cuss?$', name, flags=re.I) !=None:
         #re expressions sets the different posibilities of typos that will still match the condition
         #re.I makes it case insensitive
-        #!= sets the conditional--> there is a value 
+        #!= sets the conditional--> there is a value
         return True
     else:
         return False
 
 def main(argv):
+    """ Identifies Oak and writes a csv file'"""
     f = open('../Data/TestOaksData.csv','r')
     g = open('../Data/JustOaksData.csv','w')
     next(f)
     taxa = csv.reader(f)
     csvwrite = csv.writer(g)
-    oaks = set()
+    #oaks = set() not used
     fieldnames = ['Genus', 'Species'] #creates the field names for the csv file
     csvwrite = csv.DictWriter(g,fieldnames=fieldnames) #writes the csv based on a dictionary
     csvwrite.writeheader()
