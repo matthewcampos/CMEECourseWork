@@ -38,7 +38,7 @@ TreeHeight <- function(degrees, distance){
 #runs function to calculate tree height and assigns values into vector
 Tree_height.m <- vector() #creates empty vector
 for (z in 1:120){
-  Tree_height.m <- c(Tree_height.m,TreeHeight(distance_vector[z],angle_degrees_vector[z]))
+  Tree_height.m <- c(Tree_height.m,TreeHeight(angle_degrees_vector[z],distance_vector[z]))
 }
 
 MyData <- cbind(MyData,Tree_height.m) #adds column of the vector of tree height to 

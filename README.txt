@@ -9,3 +9,8 @@
 ###Week 2
 **Sections covered**:
 * Biological Computing in Python-I
+
+###Week 2
+**Sections covered**:
+* Biological Computing in R
+* Data management, exploration, and visualisation
