@@ -31,7 +31,7 @@ Practicals:
 * PP_Latice.R- script that produces three different graphs using data from EcolArchives-E089-51-D1.csv and outputs in three separate files in Results directory. Also produces data frame of quantitative results and writes it in PP_Results.csv
 * PP_Regress.R- script to plot regression of predator mass and prey mass, subsetting by predator.lifestage and Type.of.feeding.interaction. Calculated regression results saved in PP_Regress_Results.csv in Results directory
 * PP_Regress_loc.R- calcualtes regression but combines Type.of.feeding.interaction, Predator.lifestage, and Location
-* Map.R- utlises map package and plots location data (longtitude and latitude) in map
+* GPDD_Data.R- utlises map package and plots location data (longtitude and latitude) in map
 
 **Data**
 * EcolArchives-E089-51-D1.csv
