@@ -1,3 +1,8 @@
+##Network example of Imperial College Data
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 library(igraph) # Load the igraph package
 
 rm(list = ls())

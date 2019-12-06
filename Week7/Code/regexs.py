@@ -1,4 +1,10 @@
+"""Practice with regex in Python"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import re
+
 my_string = "a given string"
 match = re.search(r'\s', my_string)
 print(match)
@@ -42,26 +48,16 @@ re.search(r'[AGTC]+', 'the sequence ATTCGT').group()
 re.search(r'\s+[A-Z]\w+\s*\w+', "The bird-shit frog's name is Theloderma asper.").group()
 
 MyStr = 'Samraat Pawar, s.pawar@imperial.ac.uk, Systems biology and ecological theory'
-match = re.search(r"[\w\s]+,\s[\w\.@]+,\s[\w\s]+",MyStr)
+match = re.search(r"[\w\s]+,\s[\w\.-]+@[\w\.-]+,\s[\w\s]+",MyStr)
 match.group()
-
-MyStr = 'Samraat Pawar, s-pawar@imperial.ac.uk, Systems biology and ecological theory'
-match = re.search(r"[\w\s]+,\s[\w\.@]+,\s[\w\s&]+",MyStr)
-match.group()
-
-match = re.search(r"[\w\s]+,\s[\w\.-]+@[\w\.-]+,\s[\w\s&]+",MyStr)
-match.group()
-
-MyStr = 'Samraat Pawar, s.pawar@imperial.ac.uk, Systems biology and ecological theory'
-match = re.search(r"[\w\s]+,\s[\w\.-]+@[\w\.-]+,\s[\w\s&]+",MyStr)
-print(match.group())
-print(match.group(0))
+match.group(0)
 match = re.search(r"([\w\s]+),\s([\w\.-]+@[\w\.-]+),\s([\w\s&]+)",MyStr)
 if match:
     print(match.group(0))
     print(match.group(1))
     print(match.group(2))
     print(match.group(3))
+
 
 import re
 MyStr = "Samraat Pawar, s.pawar@imperial.ac.uk, Systems biology and ecological theory; Another academic, a-academic@imperial.ac.uk, Some other stuff thats equally boring; Yet another academic, y.a_academic@imperial.ac.uk, Some other stuff thats even more boring"

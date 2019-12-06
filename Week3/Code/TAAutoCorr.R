@@ -1,3 +1,8 @@
+##script to determine if there is correlation in weather data
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 load("../Data/KeyWestAnnualMeanTemperature.RData")
 MyData <- ats #store data in variable
 dim(MyData)

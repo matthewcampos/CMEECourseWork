@@ -1,9 +1,12 @@
-import csv
-
 """opens a csv file and finds the best alignment and saves it in a separate file"""
 
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
+import csv
+
 # Read a file containing:
-f = open('../data/sequences.csv','r')
+f = open('../Data/sequences.csv','r')
 
 csvread = csv.reader(f)
 
@@ -61,7 +64,7 @@ my_best_score = -1
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
     if z > my_best_score:
-        my_best_align = "." * i + s2 # think about what this is doing!
+        my_best_align = "." * i + s2 # adding "." to show where alignment is starting
         my_best_score = z
 print(my_best_align)
 print(s1)

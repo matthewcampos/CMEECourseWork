@@ -1,5 +1,9 @@
 #!/usr/bin/env/python3
 #run scripts in iPython
+"""script to run the different LV functions from the practical"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
 
 import os
 

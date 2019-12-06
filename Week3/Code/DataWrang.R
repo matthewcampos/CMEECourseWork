@@ -2,6 +2,9 @@
 ################## Wrangling the Pound Hill Dataset ############
 ################################################################
 
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 ############# Load the dataset ###############
 # header = false because the raw data don't have real headers
 MyData <- as.matrix(read.csv("../Data/PoundHillData.csv", header=F, stringsAsFactors=F))

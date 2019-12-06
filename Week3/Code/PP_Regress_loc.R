@@ -1,3 +1,8 @@
+##calculates regression but combines Type.of.feeding.interaction, Predator.lifestage, and Location
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 rm(list=ls())
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 names(MyDF) #get header names

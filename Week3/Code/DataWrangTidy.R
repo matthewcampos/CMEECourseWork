@@ -2,6 +2,9 @@
 ################## Wrangling the Pound Hill Dataset ############
 ################################################################
 
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 ############# Load the dataset ###############
 # header = false because the raw data don't have real headers
 MyData <- as.matrix(read.csv("../Data/PoundHillData.csv", header=F, stringsAsFactors=F))
@@ -36,7 +39,7 @@ TempData <- as.data.frame(MyData[-1,], stringsAsFactors = F)
 colnames(TempData) <- MyData[1,] #assign column names from original data
 
 ############# Convert from wide to long format  ###############
-#works better on df and gather condenses the columns while mutate sets the factors and data types
+#works better on df and condenses the columns while mutate sets the factors and data types
 MyWrangleData <- TempData %>% gather(Species, Count, -Cultivation, -Block, -Plot, -Quadrat) %>%  
 mutate( Cultivation <- as.factor(Cultivation),
         Block <- as.factor(Block),

@@ -1,4 +1,10 @@
+##mathematical annotations on a axis
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 plot_Lin <- function(){
+  #plots a linear model 
   x <- seq(0, 100, by = 0.1)
   y <- -4. + 0.25 * x +
     rnorm(length(x), mean = 0., sd = 2.5)

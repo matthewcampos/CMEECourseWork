@@ -1,6 +1,10 @@
+"""takes the fasta sequences from Week1 and aligns them"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import sys
 
-"""takes the fasta sequences from Week1 and aligns them"""
 
 def open_fasta(x):
     """Imports fasta files"""
@@ -24,17 +28,17 @@ def open_fasta(x):
 
 def set_variables(fasta1,fasta2):
     """Sets the variables based on sequence length"""
-        l1 = len(fasta1)
-        l2 = len(fasta2)
-        print("lengths: l1={} l2={}".format(l1, l2))
-        if l1 >= l2:
-            s1 = fasta1
-            s2 = fasta2
-        else:
-            s1 = fasta2
-            s2 = fasta1
-            l1, l2 = l2, l1 # swap the two lengths aside from the sequences
-        return s1,s2,l1,l2
+    l1 = len(fasta1)
+    l2 = len(fasta2)
+    print("lengths: l1={} l2={}".format(l1, l2))
+    if l1 >= l2:
+        s1 = fasta1 #longer length goes to s1 and shorter to s2
+        s2 = fasta2
+    else:
+        s1 = fasta2
+        s2 = fasta1
+        l1, l2 = l2, l1 # swap the two lengths aside from the sequence variables
+    return s1,s2,l1,l2
 
 def calculate_score(s1, s2, l1, l2, startpoint):
     """computes the score of the different startpoint possibilities"""
@@ -63,6 +67,7 @@ def calculate_score(s1, s2, l1, l2, startpoint):
 # calculate_score(s1, s2, l1, l2, 5)
 
 def my_best_align(s1, s2):
+    """determines the best alignment of the pair of sequences"""
     s1, s2, l1, l2 = set_variables(s1, s2) #calls for set_variables function
     # now try to find the best match (highest score) for the two sequences
     best_align = None
@@ -70,7 +75,7 @@ def my_best_align(s1, s2):
     for i in range(l1): # Note that you just take the last alignment with the highest score
         z = calculate_score(s1, s2, l1, l2, i) #calls calculate_score function
         if z > best_score:
-            best_align = "." * i + s2 # think about what this is doing!
+            best_align = "." * i + s2 # adding "." to show where alignment is starting
             best_score = z
     print(best_align)
     print(s1)

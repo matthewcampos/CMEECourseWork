@@ -1,5 +1,8 @@
 """ This is using_os.py"""
 
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 # Use the subprocess.os module to get a list of files and  directories
 # in your ubuntu home directory
 
@@ -51,7 +54,7 @@ for (dir, subdir, files) in subprocess.os.walk(home):
         if f[0].startswith("c"):
             FilesDirsStartingWithc.append(f)
 
-Files_DirsStartingWithC_c = FilesDirsStartingWithC.join(FilesDirsStartingWithc)
+Files_DirsStartingWithC_c = FilesDirsStartingWithC + FilesDirsStartingWithc
 
 print("Files and Directories in home starting with either C or c:")
 print(set(FilesDirsStartingWithC_c))

@@ -1,3 +1,8 @@
+"""Discrete time version of LV Model but also takes into account fluctuation using gaussian distribution"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import scipy as sc
 from scipy.stats import norm
 import sys

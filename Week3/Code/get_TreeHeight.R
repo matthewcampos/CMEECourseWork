@@ -13,11 +13,15 @@
 # The heights of the tree, same units as "distance"
 
 #!/usr/bin/env Rscript
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 args = commandArgs(trailingOnly=TRUE)
 
 #checks if there is an input in the command line
 if (length(args)==0){
-  stop("At least one argument must be supplied (input file).n")
+  stop("At least one argument must be supplied (input file).n. Please check Data directory folder")
 }
 
 #sets the file to a variable
@@ -40,6 +44,7 @@ print(length(angle_degrees_vector))
 
 #calculates the tree height
 TreeHeight <- function(degrees, distance){ 
+  #calculates height using trignometric rules
   radians <- degrees * pi / 180
   height <- distance * tan(radians)
   #print(paste("Tree height is:", height))

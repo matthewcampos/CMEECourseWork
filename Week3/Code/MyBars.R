@@ -1,4 +1,10 @@
+##using geom and text in ggplot to annotate a plot
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 MyBars <- function(a){
+  #reads table and produces a bar plot 
   a <- read.table("../data/Results.txt", header = TRUE)
   head(a)
   a$ymin <- rep(0, dim(a)[1]) # append a column of zeros

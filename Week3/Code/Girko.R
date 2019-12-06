@@ -1,6 +1,13 @@
+##plots two dataframes using Girko's circular law
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 Girko <- function(hradius, vradius, N){
+  #takes in parameters of other function and size to return an ellipse
   require(ggplot2)
-  build_ellipse <- function(hradius, vradius){ # function that returns an ellipse
+  build_ellipse <- function(hradius, vradius){ 
+    # function that returns an ellipse
     npoints = 250
     a <- seq(0, 2 * pi, length = npoints + 1)
     v <- hradius * cos(a)

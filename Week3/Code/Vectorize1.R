@@ -1,6 +1,12 @@
+##comparing loops with optimised code on a vector
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 M <- matrix(runif(1000000),1000,1000)
 
 SumAllElements <- function(M){
+  #function to sum the elements in a matrix
   Dimensions <- dim(M)
   Tot <- 0
   for (i in 1:Dimensions[1]){

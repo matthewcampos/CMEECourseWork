@@ -1,3 +1,8 @@
+"""Python version of the R script that produces a network of Imperial College data"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import networkx as nx
 import scipy as sc
 import matplotlib.pyplot as p

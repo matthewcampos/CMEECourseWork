@@ -1,8 +1,13 @@
+"""Uses regex to print certain information from the DataFrame"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import re
 import pandas as pd
 
 # Read the file (using a different, more python 3 way, just for fun!)
-with open('../data/blackbirds.txt', 'r') as f:
+with open('../Data/blackbirds.txt', 'r') as f:
     text = f.read()
 
 # replace \t's and \n's with a spaces:

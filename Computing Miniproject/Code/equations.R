@@ -5,7 +5,8 @@ Logistic_model <- function(N0,k,r,t){
 #as r increases,the less time it takes for the population to reach k so goes from s shape to r shape
 #as k increases, the more time it takes for the population to reach k so more time before it exponentially grows rapidly
 
-Baryani_model <- function(h0,N0,k,r,t){
+Baryani_model <- function(tlag,N0,k,r,t){
+  h0 <- tlag * r
   return(y <- N0 + (r * t) + ((1/r) * log(exp(-r*t)+exp(-h0)-exp((-r*t)-h0))) - 
            log(1 + (exp(r*t)+(1/r) * log(exp(-r*t)+exp(-h0)-exp((-r*t)-h0))-1)/(exp(k-N0))))
 }
@@ -26,6 +27,17 @@ Buchanan_model <- function(tlag,N0,k,r,t){
            r * (t - tlag)/log(10) + (t >= tlag) * 
            (t > (tlag + (k - N0) * log(10)/r)) * (k - N0))
 }
+t <- c(1:1000)
+N0 <- 1
+k <- 50
+r <- 0.5
+tlag <-20
+y <- Buchanan_model(tlag,N0,k,r,t)
+plot(t,y)
+#decreasing k lessens the time taken to reach carrying capacity
+#increasing tlag causes the time for linear increase to occur later
+#increasing r makes the linear growth steeper
+#smaller starting value takes longer to reach carrying capacity
 
 Quadratic_model_2nd_deg <- function(A,B,C,t){
   return(y <- A + (B * t) + (C * t^2))
@@ -39,13 +51,4 @@ Quadratic_model_4th_deg <- function(A,B,C,D,E,t){
   return(y <- A + (B * t) + (C * t^2) + (D * t^3) + (E * t^4))
 }
 #increasing degree makes it steeper
-
-
-
-
-
-#write an algorithm to find the initial parameter values
-#to find r, have to get tangent line in growth and get slope
-#k is the asymptote at the top
-#can derive tlag from r and h0
-#use lm for polynomial 
+#use lm function and poly with set degrees

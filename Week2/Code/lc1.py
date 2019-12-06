@@ -1,5 +1,8 @@
 """Using loops and comprehensions to retrieve data from a tuple"""
 
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),
@@ -23,7 +26,7 @@ latin_names=[]
 common_names=[]
 mean_body_masses=[]
 for i in birds:
-    latin_names.append(i[0]) #these are lists so use the append and
+    latin_names.append(i[0]) #these are lists so use the append based on the indexes
     common_names.append(i[1])
     mean_body_masses.append(i[2])
 print(latin_names)

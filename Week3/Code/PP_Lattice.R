@@ -1,3 +1,8 @@
+##script that produces three different graphs using data from EcolArchives-E089-51-D1.csv
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 require(lattice)
 require(plyr)

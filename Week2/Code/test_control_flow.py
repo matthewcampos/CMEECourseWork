@@ -2,7 +2,7 @@
 
 """Some functions exemplifying the use of control statements"""
 
-__author__ = 'Your Name (Your.Name@your.email.address)'
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
 __version__ = '0.0.1'
 
 import sys

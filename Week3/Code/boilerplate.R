@@ -1,5 +1,8 @@
 # A boilerplate R script
 
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 MyFunction <- function(Arg1, Arg2){
   
   # Statements involving Arg1, Arg2:

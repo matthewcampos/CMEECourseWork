@@ -37,7 +37,7 @@ for (s in species){
       #par(mfrow=c(2,2))
       for (c in citation){
         c_data <- filter(temp_data, Citation==c) #finally group by citation to get overall unique ID
-        plot(c_data$Time, c_data$PopBio, xlab="Time", ylab="Abundance", log="y", main=paste(s,m,t, sep = "\n"))
+        plot(c_data$Time, log(c_data$PopBio), xlab="Time", ylab="Abundance", main=paste(s,m,t, sep = "\n"))
         mtext(c, side = 3, cex = 0.25) #adds citation at the top
       }
       mtext(c_data$PopBio_units, side = 2, line = 2, cex = 0.75) #adds pop_bio units to the elft
@@ -45,11 +45,6 @@ for (s in species){
   }
 }
 dev.off() #close pdf file with all graphs
-
-#finding r value- max and min value
-find_r_max <- function(){
-  
-}
 
 #save datapoints in a csv file
 for (s in species){ 
@@ -63,13 +58,12 @@ for (s in species){
       citation <- unique(temp_data$Citation) #find unique citation
       time <- c()
       abundance <- c()
-      #par(mfrow=c(2,2))
       for (c in citation){
-        c_data <- filter(temp_data, Citation==c) #finally group by citation to get overall unique ID
-        time <- c(c_data$Time)
-        abundance <-c(c_data$PopBio)
-        df <- data.frame("Time"=c_data$Time,"Abundance"=c_data$PopBio, stringsAsFactors = FALSE)
-        write.csv(df,paste("../Results/CSV/",s,"_",m,"_",t,".csv"))
+        c_data <- filter(temp_data, Citation==c)#finally group by citation to get overall unique ID
+        time <- c(c_data$Time,time)
+        abundance <-c(log(c_data$PopBio),abundance)
+        df <- data.frame("Time"=time,"Abundance"=abundance)
+        write.csv(df,paste("../Results/CSV/",s,"_",m,"_",t,".csv",sep = ""))
       }
     }
   }

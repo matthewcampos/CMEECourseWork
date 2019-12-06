@@ -39,6 +39,7 @@ def foo_4(z=12):
         z=z+1
 
 def main(argv):
+    """tests the different function using main arguments"""
     print(foo_1(12))
     print(foo_2(18))
     print(foo_3(0))

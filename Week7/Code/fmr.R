@@ -4,6 +4,9 @@
 # 1999 dataset to a file fmr.pdf.
 # Writes the list of species names to species.csv
 
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 cat("Reading CSV\n")
 
 nagy <- read.csv('../Data/NagyEtAl1999.csv', stringsAsFactors = FALSE)

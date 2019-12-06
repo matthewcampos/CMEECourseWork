@@ -1,3 +1,8 @@
+"""Python version of get_TreeHeight.R"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import sys
 import pandas as pd
 import numpy as np
@@ -20,7 +25,7 @@ def Tree_height(data):
 def writefile(data, path):
     """formats the file name of the result file"""
     file = re.findall(r"/+([\w\d]+).csv", sys.argv[1]) #finds csv input files
-    filename = file[0] + r"_treeheights.csv"
+    filename = "Py_" + file[0] + r"_treeheights.csv"
     path = "../Results/" + filename
     data.to_csv(path, index=False) #function that writes it as a csv
 

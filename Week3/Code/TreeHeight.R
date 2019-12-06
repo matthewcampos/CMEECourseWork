@@ -10,6 +10,9 @@
 # OUTPUT
 # The heights of the tree, same units as "distance"
 
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 MyData <- read.csv('../Data/trees.csv', header = TRUE)
 print(MyData)
 #figure out how many distnace measurements were taken and transfer to a vector
@@ -26,8 +29,8 @@ for (y in MyData[3]){
 }
 print(length(angle_degrees_vector)) 
 
-#calculates the tree height
 TreeHeight <- function(degrees, distance){ 
+  #calculates the tree height
   radians <- degrees * pi / 180
   height <- distance * tan(radians)
   #print(paste("Tree height is:", height))

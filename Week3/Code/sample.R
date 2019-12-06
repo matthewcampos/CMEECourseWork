@@ -1,13 +1,18 @@
-######### Functions ##########
+######### Different Functions and Run Time ##########
 
-## A function to take a sample of size n from a population "popn" and return its mean
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
+
 myexperiment <- function(popn, n){
+  # A function to take a sample of size n from a population "popn" and return its mean
   pop_sample <- sample(popn, n, replace=TRUE)
   return(mean(pop_sample))
 }
 
-## Calculate means using a for loop without preallocation
+
 loopy_sample1 <- function(popn, n, num){
+  # Calculate means using a for loop without preallocation
   result1 <- vector() # Initialise empty vector of size 1
   for (i in 1:num){
     result1 <- c(result1, myexperiment(popn, n))
@@ -15,17 +20,18 @@ loopy_sample1 <- function(popn, n, num){
   return(result1)
 }
 
-## To run "num" iterations of the experiment using a for loop on a vector with preallocation
 loopy_sample2 <- function(popn, n, num){
-  result2 <- vector( ,num) #Preallocate expected size
+  # To run "num" iterations of the experiment using a for loop on a vector with preallocation
+  result2 <- vector(,num) #Preallocate expected size
   for (i in 1:num){
     result2[i] <- myexperiment(popn, n)
   }
   return(result2)
 }
 
-## To run "num" iterations of the experiment using a for loop on a list with preallocation
+
 loopy_sample3 <- function(popn, n, num){
+  # To run "num" iterations of the experiment using a for loop on a list with preallocation
   result3 <- vector("list", num)
   for (i in 1:num){
     result3[[i]] <- myexperiment(popn, n)
@@ -33,14 +39,16 @@ loopy_sample3 <- function(popn, n, num){
   return(result3)
 }
 
-## To run "num" iterations of the experiment using vectorization with lapply
+
 lapply_sample <- function(popn, n, num){
+  # To run "num" iterations of the experiment using vectorization with lapply
   result4 <- lapply(1:num, function(i) myexperiment(popn, n))
   return(result4)
 }
 
-## To run "num" iterations of the experiment using vectorization with lapply
+
 sapply_sample <- function(popn, n, num){
+  # To run "num" iterations of the experiment using vectorization with lapply
   result5 <- sapply(1:num, function(i) myexperiment(popn, n))
   return(result5)
 }

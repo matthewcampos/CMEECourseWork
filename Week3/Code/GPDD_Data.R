@@ -1,3 +1,8 @@
+##Plot areas on a map based on longtitude and latitude
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 print(load("../Data/GPDDFiltered.RData")) #load the data 
 MyData <- as.data.frame(gpdd) #convert to a dataframe 
 

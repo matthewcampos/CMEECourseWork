@@ -1,3 +1,8 @@
+"""Discrete time version of the LV Model and saves pdf in Results folder"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import scipy as sc
 import sys
 import matplotlib.pylab as p
@@ -41,7 +46,7 @@ RC = CR_t(RC0,t)
 print("consumer population is: %s, resource population is: %s" %(RC[t-1,1],RC[t-1,0]))
 
 print(RC)
-
+#Plotting
 f1 = p.figure()
 p.plot(range(t), RC[:,0], 'g-', label='Resource density') # Plot
 p.plot(range(t), RC[:,1]  , 'b-', label='Consumer density')

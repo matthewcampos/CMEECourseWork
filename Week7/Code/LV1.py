@@ -1,3 +1,8 @@
+"""Script to plot consumers-resource population dynamics and save to PDF"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import scipy as sc
 import scipy.integrate as integrate
 

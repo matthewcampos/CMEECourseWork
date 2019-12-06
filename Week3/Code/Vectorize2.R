@@ -1,8 +1,12 @@
+##stochastic Ricker model 
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 Ricker <- function(N0=1, r=1, K=10, generations=50)
 {
   # Runs a simulation of the Ricker model
   # Returns a vector of length generations
-  
   N <- rep(NA, generations)    # Creates a vector of NA
   
   N[1] <- N0
@@ -24,8 +28,8 @@ rm(list=ls())
 
 stochrick<-function(p0=runif(1000,.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
 {
-  #initialize using matrix
-  N<-matrix(NA,numyears,length(p0))
+  #stochastic version of ricker model by adding random error 
+  N<-matrix(NA,numyears,length(p0)) #initialize using matrix
   N[1,]<-p0
   
   for (pop in 1:length(p0)) #loop through the populations
@@ -49,8 +53,8 @@ print(system.time(stochrick(runif(1000,.5,1.5),1.2,1,0.2,100))) #elapsed = 0.261
 
 stochrickvect<-function(p0=runif(1000,0.5,1.5),r=1.2,K=1,sigma=0.2,numyears=100)
 {
-  #initialize using vector rather than matrix
-  N<-matrix(NA,numyears,length(p0))
+  #vectorising the stochastic version of the ricker model 
+  N<-matrix(NA,numyears,length(p0)) #initialize using vector rather than matrix
   N[1,]<-p0 #adds 1000 elements into vector
   
     for (yr in 2:numyears) #removed one for loop, and just use the loop through the years

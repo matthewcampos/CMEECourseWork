@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 """Understanding what foo_ function does"""
+
 #docstrings are considered part of the running code (normal comments are
 #stripped). Hence, you can access your docstrings at run time.
 __author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'

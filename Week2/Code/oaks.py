@@ -1,3 +1,9 @@
+"""Using loops to identify certain taxa that are oak trees from list"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
+
 ## Finds just those taxa that are oak trees from a list of species
 taxa = [ 'Quercus robur',
          'Fraxinus excelsior',
@@ -7,13 +13,14 @@ taxa = [ 'Quercus robur',
        ]
 
 def is_an_oak(x):
+    """function that identifies taxa that are oak trees"""
     return x.lower().startswith('quercus')
 
 ##Using loops
-oak_loops=set()
-for species in taxa:
+oak_loops=set() #creates a set
+for species in taxa: #loops through taxa array
     if is_an_oak(species):
-        oak_loops.add(species)
+        oak_loops.add(species) #if condition met, it is added to set
 print(oak_loops)
 
 ##Using list comprehensions

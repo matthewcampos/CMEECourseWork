@@ -1,3 +1,8 @@
+##script to plot regression of predator mass and prey mass, subsetting by predator.lifestage and Type.of.feeding.interaction.
+
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
+
 rm(list=ls())
 MyDF <- read.csv("../Data/EcolArchives-E089-51-D1.csv")
 names(MyDF) #get header names

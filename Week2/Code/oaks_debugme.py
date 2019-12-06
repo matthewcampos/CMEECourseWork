@@ -1,11 +1,14 @@
 """practice with debugging and fixing code"""
 
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 import csv
 import sys
 import re
 import os
-os.chdir("/Users/MatthewCampos/Documents/CMEECourseWork/Week2/Code")
 import doctest
+#os.chdir("/Users/MatthewCampos/Documents/CMEECourseWork/Week2/Code")
 
 #Define function
 def is_an_oak(name):
@@ -55,7 +58,7 @@ def main(argv):
         print(row)
         print ("The genus is: ")
         print(row[0])
-        if is_an_oak(row[0]+" "):
+        if is_an_oak(row[0]):
             print('FOUND AN OAK!')
             csvwrite.writerow({'Genus':row[0], 'Species':row[1]}) #assigns each index to the correct header
 

@@ -1,4 +1,9 @@
 ##Try this first
+"""Understanding scope and how to manipulate variables"""
+
+__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+__version__ = '0.0.1'
+
 _a_global=10 # a global variable
 
 if _a_global >=5:

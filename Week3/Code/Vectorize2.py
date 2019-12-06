@@ -4,7 +4,6 @@
 
 __author__ = "Matthew Campos (matthew.campos19@imperial.ac.uk)"
 __version__ = '0.0.1'
-__license__ = "License for this code/program"
 
 import numpy as np
 import time
