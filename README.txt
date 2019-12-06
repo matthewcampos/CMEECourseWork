@@ -44,9 +44,11 @@
 * Biological Computing in Python-II
 
 ###Week 8
+**Sections covered**:
 * Computing Miniproject
 
 ###Week 9
+**Sections covered**:
 * HPC
   - mlc19_HPC_2019_main.R - contains all functions
   - mlc19_HPC_2019_test.R - test the functions using parameters required
@@ -57,4 +59,5 @@
   - e_results - error file results from HPC run
 
 ###Week 10
+**Sections covered**:
 * Biological Data Structure and C Programming
