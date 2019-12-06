@@ -15,6 +15,7 @@ def stochrick(p0 = np.random.uniform(0.5,1.5,size=10), r=1.2, K=1, sigma=0.2, nu
     for pop in range(0, len(p0)):
         for yr in range(1, numyears):
             N[yr,pop] = N[(yr-1),pop] * np.exp(r*(1-N[(yr-1),pop]/K) + np.random.normal(0,sigma,1)) #calculates stochastic Ricker equation by random sampling from a normal distribution
+    print(N)
     return(N)
 
 Stochrick_start = time.time()

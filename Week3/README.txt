@@ -23,6 +23,7 @@
 * TreeHeight.R- function that calculates tree heights and modified to take in data and print results in a separate file in Results directory
 * Vectorize2.R- vectorization challenge to improve run time of a script
 * Vectorize1.py & Vectorize2.py- extra credit of translating Vectorize1.R & Vectorize2.R into python script and showing run time through bash script
+* run_Vectorize.sh - bash script to run the Vectorize practicals in R and Python
 * TAAutoCorr.R- script to determine if there is correlation in weather data
 * autocorrelation.tex- LaTeX document of analysis of TAAutoCorr.R. PDF version saved in Results directory
 * get_TreeHeight.R- extra credit of taking input of file name from command line
