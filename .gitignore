@@ -1,1 +1,7 @@
-echo -e *~ \n*.tmp
+.DS_Store
+*~
+*.tmp
+*.pyc
+.Rhistory
+_pycache_
+.idea/
