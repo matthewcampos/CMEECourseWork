@@ -1,10 +1,10 @@
 #include <stdlib.h>
 
-#include "/treelib/tree.h"
+#include "tree.h"
 
 int main (void){
     tree_t* t = NULL;
-    int anctable[] = {6,7,7,5,5,6,8,8,8,-1}
+    int anctable[] = {6,7,7,5,5,6,8,8,8,-1};
 
     t = new_tree(5);
 

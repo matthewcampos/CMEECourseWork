@@ -1,17 +1,18 @@
 #include "tree.h"
 #include <stdlib.h>
-#include <stdio.h>
+
 
 tree_t* new_tree(int num_taxa)
 {
     tree_t *newt = NULL;
+    int i = 0;
 
     newt = (tree_t*)calloc(1, sizeof(tree_t));
 
     if(newt != NULL){
         newt->num_taxa = num_taxa;
         newt->num_nodes = 2 * num_taxa - 1;
-        newt->num_nodes = (node_t*)calloc(newt->num_nodes, sizeof(node_t))
+        newt->nodes = (node_t*)calloc(newt->num_nodes, sizeof(node_t));
         if (newt->nodes == NULL){
             //allocation failed; clean up and return NULL
             free(newt);
@@ -45,7 +46,7 @@ void tree_clear_connects(tree_t* t)
 
     for (i = 0; i < t->num_nodes; ++i) { //use address pointer t as it is not a global variable
         t->nodes[i].left = NULL;
-        t->nodes[i].right = NULL:
+        t->nodes[i].right = NULL;
         t->nodes[i].anc = NULL;
     }
 }
@@ -61,12 +62,12 @@ void tree_read_anc_table(int *anctable, tree_t* t)
     //loop over all elements of ancetable
     // at each position link that node to its ancestor and make last element the root (-1)
     for (i=0; i < t->num_nodes-1; ++i){
-        j = anctable[i] //index of the ancestor of the ith node based on edgetable
+        j = anctable[i]; //index of the ancestor of the ith node based on edgetable
         t->nodes[i].anc = &t->nodes[j];
         if (t->nodes[j].left == NULL){
-            t->nodes[j].left = t->nodes[i];
+            t->nodes[j].left = &t->nodes[i];
         }else{
-                t->nodes[j].right = t->nodes[i];
+                t->nodes[j].right = &t->nodes[i];
         }
     }
 

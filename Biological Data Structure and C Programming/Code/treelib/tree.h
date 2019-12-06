@@ -13,5 +13,6 @@ typedef struct _tree {
 tree_t* new_tree(int num_taxa);
 void delete_tree(tree_t* tree);
 void tree_read_anc_table(int *ancetable, tree_t* t); //read an array of integers assumed to be formatted to build a tree
+void tree_traverse(tree_t* t);
 
 #endif
