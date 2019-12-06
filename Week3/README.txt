@@ -9,6 +9,7 @@
 * next.R- using next in loops
 * boilerplate.R- understanding syntax of writing a function in R
 * Vectorize1.R- comparing loops with optimised code on a vector
+* Ricker.R- running and plotting the discrete population model
 * preallocate.R- understanding how memory allocation works
 * apply1.R- collection of functions that vectorize code for you
 * apply2.R- constructed functions used for vectorization
