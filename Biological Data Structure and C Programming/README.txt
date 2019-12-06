@@ -55,6 +55,4 @@
   - countprime.c
   - countprime.h
   - Rcprimes.c
-
-
 * compilerfeedback.c
