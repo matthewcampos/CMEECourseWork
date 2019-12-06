@@ -48,8 +48,13 @@
   - tree.h
 * Trees
   - tree.c
+  - node.c
+  - testtree.c
 * Embedding C in python
 * Embedding C in R
+  - countprime.c
+  - countprime.h
+  - Rcprimes.c
 
 
 * compilerfeedback.c
