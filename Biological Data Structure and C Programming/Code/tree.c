@@ -45,9 +45,10 @@ void tree_read_anc_table(int *anctable, tree_t* t)
     //loop over all elements of ancetable
     // at each position link that node to its ancestor
     for (i=0; i < t->num_nodes; ++i){
-        t->nodes[i].anc = &t->nodes[anctable[i]];
-        if (t->nodes[anctable[i]].left == NULL){
-            t->nodes[anctable[i]].left = t->nodes[i];
+        j = anctable[i] //index of the ancestor of the ith node based on edgetable
+        t->nodes[i].anc = &t->nodes[j];
+        if (t->nodes[j].left == NULL){
+            t->nodes[j].left = t->nodes[i];
         }else{
                 t->nodes[anctable[i]].right = t->nodes[i];
         }
