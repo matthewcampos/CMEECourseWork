@@ -37,6 +37,17 @@ void delete_tree(tree_t* tree)
     //Implement
 }
 
+void tree_clear_connects(tree_t* t)
+{
+    int i = 0;
+
+    for (i = 0; i < t->num_nodes; ++i) { //use address pointer t as it is not a global variable 
+        t->nodes[i].left = NULL;
+        t->nodes[i].right = NULL:
+        t->nodes[i].anc = NULL;
+    }
+}
+
 void tree_read_anc_table(int *anctable, tree_t* t)
 {
     int i = 0;
