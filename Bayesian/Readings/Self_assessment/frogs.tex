@@ -1,0 +1,93 @@
+
+\section{Frogs}
+
+        During your latest field trip in Costa Rica you observed how brightly coloured
+        poison dart frogs (part of the \textit{Dendrobatidae} family) were.
+        In fact, the brightness of their skin colouration is correlated with their toxicity.
+        To investigate the prevalence of toxic frogs in the area under study, you collected
+        $n$ samples of poison dart frogs and observed that $k$ of them have bright skin colour
+        (and thus are toxic).
+
+        \paragraph{Question A}
+
+        You now want to estimate the \textbf{population} frequency of the red colour
+        phenotype, $f \in [0,1]$.
+        Assuming a generic likelihood function $p(k|f,n)$, where $k$ is our observed data,
+        and prior distribution $p(f)$, write the expression for the posterior distribution
+        of $f$, $p(f | n,k)$.
+        Indicate the interval for the integration over $f$ explicitly.
+        Finally, if $p(f|\mu)$ (assuming we have uncertainty on the prior for $f$
+        with parameter $\mu$, what is the resulting full equation for the posterior
+        distribution $p(f | n,k,\mu)$?
+
+        \paragraph{Question B}
+
+	If we define the likelihood function as a Binomial distribution:
+        \begin{equation}
+                p(k|f,n) = ( \genfrac{}{}{0pt}{}{n}{k} ) f^k(1-f)^{n-k}
+        \end{equation}
+        and the prior function as a Beta distribution $B(\alpha,\beta)$:
+        \begin{equation}
+                p(f) = \frac{1}{B(\alpha,\beta)} f^{\alpha-1}(1-f)^{\beta-1}
+        \end{equation}
+        then the posterior distribution of $f$ is a Beta distribution with
+        parameters $\alpha'=k+\alpha$ and $\beta'=n-k+\beta$.
+
+        What is the frequentist estimate of $f$?
+        What is the maximum likelihood estimate of $f$?
+        What is the maximum \textit{a posteriori} mode of $f$ using the noninformative
+        conjugate prior $p(f) \sim B(\alpha=1,\beta=1)$?
+        What is the maximum \textit{a posteriori} mode of $f$ assuming $k=12$ and $n=235$ using the
+        uniform prior $p(f) \sim U(0.5,1)$?
+
+        \paragraph{Question C}
+
+        Assuming we collected 100 samples and 25 of them have bright skin colour,
+        please complete the \texttt{R} code below in order to generate both the exact
+        and approximated posterior distribution of $f$ using the informative
+        prior $p(f) \sim B(\alpha=2,\beta=1)$.
+        You need to fill in where the string '???' is present.
+        Finally, discuss which summaries you would report to describe the resulting posterior
+        distribution.
+	\begin{lstlisting}[language=R]
+                # we evaluate our parameter f over a grid of 100 values for the whole range [0,1]
+                f <- seq(0, 1, ???)
+
+                # suppose we collected 100 samples and 25 of them have bright skin colour
+                k <- 25
+                n <- 100
+                # alpha and beta are the parameter values for the posterior Beta distribution
+                alpha <- ???
+                beta <- ???
+
+                # we now evaluate the density function to obtain the EXACT posterior distribution
+                y <- ???(???, shape1=alpha, shape2=beta)
+
+                # we now use Monte Carlo sampling to obtain the APPROXIMATED posterior distribution.
+                Make a reasonable choice for the number of random samples.
+                y_sampled <- ???
+                y_sampled_distribution <- ???
+
+        \end{lstlisting}
+
+        \paragraph{Question D}
+
+	If we use a Normal distribution as prior information, such as
+        $p(f)=N(\mu,\sigma^2)$, we cannot derive a closed form and cannot sample
+        directly from the posterior distribution.
+        We can use a rejection sampling algorithm for \textit{indirect} sampling of the
+        posterior distribution.
+        This algorithm requires the identification of an envelope function $g(f)$ and a
+        constant $M>0$ such that $p(k|f,n)p(f)<Mg(f)$.
+
+        Identify both a suitable envelope function $g(f)$ and a value for $M$ assuming that
+        we know that the maximum density value for the posterior distribution is $K$.
+        Describe the full algorithm (with formal notation for equarions, e.g. $\nu \sim P(\lambda=2)$)
+        or write its pseudocode (as accurate as possible).
+        Describe what happens to the algorithm and/or the approximation if we
+        choose $M>>K$ or $M<<K$.
+
+        If we want to use an MCMC sampling approach, is it possible to use a Gibbs sampler in this case
+        or is it more appropriate to use a rejection algorithm like the Metropolis one? Why?
+
+

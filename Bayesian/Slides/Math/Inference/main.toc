@@ -1,0 +1,6 @@
+\babel@toc {UKenglish}{}
+\beamer@sectionintoc {1}{Statistical analysis}{3}{0}{1}
+\beamer@sectionintoc {2}{Descriptive statistics}{14}{0}{2}
+\beamer@sectionintoc {3}{Inferential statistics}{26}{0}{3}
+\beamer@sectionintoc {4}{Likelihood}{41}{0}{4}
+\beamer@sectionintoc {5}{Hypothesis testing}{56}{0}{5}

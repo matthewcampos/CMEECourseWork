@@ -7,11 +7,11 @@ source("mlc19_HPC_2019_main.R")
 iter <- as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
 #Local test Cluster
 #iter <- seq(3) #testing first three 
-set.seed(as.integer(iter))
-mod <- iter %% 4
-speciation_rate <- 0.003874
-wall_time <- 11.5 * 60
-interval_rich <- 1
+#set.seed(as.integer(iter))
+#mod <- iter %% 4
+#speciation_rate <- 0.003874
+#wall_time <- 11.5 * 60
+#interval_rich <- 1
 set.seed(as.integer(iter))
 mod <- iter %% 4
 speciation_rate <- 0.003874

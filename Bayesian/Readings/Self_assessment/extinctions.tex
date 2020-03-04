@@ -1,0 +1,55 @@
+
+\section{Extinctions}
+
+The time between extinction events of amphibians in South America under current climatic conditions ($\lambda$) can be described with an exponential distribution
+\begin{equation*}
+        p(x|\lambda) = \lambda e^{-\lambda x} 
+\end{equation*}
+for $x \geq 0$ with $X=\{x_1, x_2, ..., x_n\}$ being a continuous random variable.
+Please note that $p(x|\lambda)=0$ for $x<0$.
+
+The conjugate prior for an exponential distribution is a Gamma distribution 
+\begin{equation*}
+        p(\lambda|\alpha, \beta) = \frac{\lambda^{\alpha-1} e^{-\lambda / \beta} }{ \Gamma(\alpha) \beta^\alpha}
+\end{equation*}
+with $\Gamma(\alpha)$ being the gamma function (a normalising factor). 
+Please note that $\alpha>0$ and $\beta>0$ and that the expected value is $\alpha \beta$ and the variance i
+s $\alpha \beta^2$
+
+\paragraph{Question A}
+
+Show that the posterior distribution $p(\lambda|x)$ is a Gamma distribution $G(\alpha', \beta')$ with $\alpha' = \alpha + 1$, assuming we have a single observation $x$. Please note that $\beta' = \beta + x$.
+
+\paragraph{Question B}
+
+Assume that, based on past observations, you expect a time between extictions of $3.5$ \textit{a priori} but with a large uncertainty associated to it.
+Choose suitable values for hyper-parameters $\alpha$ and $\beta$ to fit this prior belief and calculate the posterior mean with $x=2.5$.
+
+\paragraph{Question C}
+
+Assume that you calculate a Bayes factor for testing $M1 = \{\lambda \geq t\}$ vs. $M2 = \{\lambda < t\}$ with $t>0$ being a threshold on whether or not to activate a conservation strategy. 
+You obtain a value of $150$.
+Discuss the support for $p(\lambda | x) \geq t$ and $p(\lambda | \alpha, \beta) \geq t$ in light of the definition and interpretation of Bayes factors.
+
+Assuming that the 95\% highest density posterior interval for $\lambda$ is $[0.29 - 28.69]$, what can we say about the probability that the time between extictions is larger than $28.69$? 
+
+\paragraph{Question D}
+
+Assume that your prior information is now described by a Normal distribution $p(\lambda|\mu, \sigma^2)$, that is you lack a conjugate prior.
+Describe an algorithm (or write a pseudo code) for obtaining samples for the posterior distribution $p(\lambda | x)$.
+Be as precise and formal as possible and highlight any pros and cons of the chosen algorithm.
+
+\paragraph{Question E}
+
+Answer either point \textbf{(a)} or \textbf{(b)}.
+
+\textbf{(a)}
+
+Describe the rationale behind the sequential Monte Carlo (SMC) MCMC algorithm to estimate parameters and perform model selection.
+What are the main advantages (and disadvantages, if any) over a standard MCMC? What are the additional parameters of the algorithm? 
+
+\textbf{(b)}
+
+Describe the main features of representing probabilistic relationships between random variables with a Bayesian network.
+
+

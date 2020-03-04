@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\input{header}
+
+\begin{document}
+
+	\pagenumbering{gobble}
+	\maketitle
+
+	\newpage
+
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+
+	\include{birds}
+
+	\include{frogs}
+
+	\include{aDNA}
+
+	\include{extinctions}
+
+	% List of figures and tables
+	\newpage
+
+	\section*{Abbreviations}
+
+	        BF: Bayes factor\\
+       		HPD: highest posterior density\\
+        	iid: independent and identically distributed\\
+        	LR: likelihood ratio\\
+        	LRT: likelihood ratio test\\
+        	MAP: maximum a posteriori probability\\
+        	MCMC: Markov chain Monte Carlo\\
+        	MLE: maximum likelihood estimate\\
+        	pdf: probability density function\\
+        	pmf: probability mass function\\
+
+	\begin{appendix}
+    		\listoffigures
+		\listoftables
+	\end{appendix}
+        
+	% Bibliography
+	\newpage
+   	\bibliography{biblio}
+	\bibliographystyle{ieeetr}
+    
+\end{document}
+

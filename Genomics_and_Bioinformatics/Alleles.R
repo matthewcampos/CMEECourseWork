@@ -1,5 +1,5 @@
 rm(list=ls())
-data <- read.csv("genomics_and_bioinformatics/practicals/bears.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
+data <- read.csv("bears.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
 dim(data)
 sample <- data[1:10,1:100]
 
@@ -16,6 +16,7 @@ SNP <- function(data){
   }
   return(location)
 }
+location <- SNP(data)
 
 
 #2 calculate, print and visualise allele frequencies for each SNP

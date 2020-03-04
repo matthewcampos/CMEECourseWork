@@ -1,9 +1,9 @@
 rm(list=ls())
-western_band_gecko <- read.csv("genomics_and_bioinformatics/Practicals/western_banded_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
+western_band_gecko <- read.csv("western_banded_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
 western_band_gecko[1:10,1:10]
-bent_toed_gecko <- read.csv("genomics_and_bioinformatics/Practicals/bent-toed_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
+bent_toed_gecko <- read.csv("bent-toed_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
 bent_toed_gecko[1:10,1:10]
-leopard_gecko <- read.csv("genomics_and_bioinformatics/Practicals/leopard_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
+leopard_gecko <- read.csv("leopard_gecko.csv", header=FALSE, stringsAsFactors = FALSE, colClasses = c("character"))
 leopard_gecko[1:10,1:10]
 
 dim(bent_toed_gecko) #20,20,000

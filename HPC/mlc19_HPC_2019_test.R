@@ -23,12 +23,12 @@ choose_two(4)
 
 neutral_step(c(10,5,13))
 neutral_generation(c(10,5,13,10))
-neutral_time_series(community=init_community_max(7),15)
+neutral_time_series(community=init_community_max(7),20)
 
 question_8()
 
 neutral_step_speciation(c(10,5,13),0.8)
-neutral_generation_speciation(c(10,5,13,20,25),0.3)
+neutral_generation_speciation(c(10,5,13,20),0.3)
 neutral_time_series_speciation(community=init_community_max(7),0.3,15)
 
 question_12()
@@ -59,3 +59,7 @@ draw_fern2()
 
 Challenge_A()
 Challenge_B()
+Challenge_C()
+Challenge_D()
+Challenge_E()
+Challenge_F()
