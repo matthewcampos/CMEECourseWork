@@ -45,7 +45,7 @@
 
 ###Week 8
 **Sections covered**:
-* Computing Miniproject
+* MiniProject
 
 ###Week 9
 **Sections covered**:
@@ -61,3 +61,24 @@
 ###Week 10
 **Sections covered**:
 * Biological Data Structure and C Programming
+
+###Week 12
+**Sections covered**:
+* Maths in Biology
+  - Tutorial1.R - questions from first tutorial requiring R
+
+###Week 14
+**Sections covered**:
+* Evolutionary Modelling
+
+###Week 15
+**Sections covered**:
+* Maximum Likelihood
+
+###Week 16
+**Sections covered**:
+* Ecological Modelling
+
+###Week 17
+**Sections covered**:
+* Bayesian Statistics
