@@ -22,6 +22,7 @@ for (i in 1:length(rda_list)){
   },error=function(e){}) #trycatch to ignore errors 
 }
 table(is.na(starting_parameter_values[,1])) #counts how many NA in r_max and t_lag
+dev.off()
 
 #create dataframe with AIC values
 aic_results_df <- data.frame(matrix(ncol = 4, nrow = length(rda_list)))
@@ -128,6 +129,7 @@ for (i in 1:length(rda_list)){
 #barplot to visualise best fit
 bp <- barplot(best_fit,main="Lowest AIC Count",ylab="count",col = "grey")
 text(bp, 0, as.numeric(best_fit), cex=1, pos=3) #add values to each bar plot
+dev.off()
 
 #find NA and convert to 0
 LNA_index <- which(is.na(aic_results_df$Logistic)==TRUE) #find NA index in Logistic column
@@ -145,6 +147,7 @@ result <- colSums(aic_results_df != 0) #get count for each column for values not
 #barplot
 bp2 <- barplot(result,main="Fit Count",ylab="count",col = "grey")
 text(bp2, 0, as.numeric(result), cex=1, pos=3) #add values to each bar plot
+dev.off()
 
 
 

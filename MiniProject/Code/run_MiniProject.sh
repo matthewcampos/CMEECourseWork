@@ -1,8 +1,8 @@
 #!/bin/sh
-#Bash script to run entire MiniProject
-#Python, R script and LaTex files
-#Matthew Campos
-#04/03/2020
+
+##Bash script to run entire MiniProject Scripts: Python, R script and LaTex files
+##__author__ = 'Matthew Campos (matthew.campos19@imperial.ac.uk)'
+##__version__ = '0.0.1'
 
 #Run Data Exploration
 python3 "Data_wrangling.py"
@@ -23,10 +23,10 @@ Rscript "NLM_Fit.R"
 Rscript "Temp_corr.R"
 
 #Run LaTex
-bash CompileLaTex.Sh Thesis
+bash CompileLaTex.Sh MiniProject_report
 #word count
-texcount -1 -sum Thesis.tex > MiniProject.sum
+texcount MiniProject_report.tex
 #re-run with word count
-bash CompileLaTex.Sh Thesis
+bash CompileLaTex.Sh MiniProject_report
 
 echo "Report Compiled"
