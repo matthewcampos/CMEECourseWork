@@ -77,7 +77,7 @@ Four mechanistic models will be tested on the data set. These are the Logistic G
           N_{max}, & \text{if } t\geq t_{max}
           \end{cases} \label{eq:Buchanan Model} \tag{1.4}
 \end{equation*}
-Model fits be will be assessed using the Akaike Information Criterion (AIC), which is a relative comparison where the best fit is the model with the minimum value \cite{vrieze2012model, posada2004model}. The AIC is a criterion used to assess the model fits. It is a relative measure of the Kullback-Leibler divergence estimate. Meaning that whereas the K-L divergence measures the deviation of a model from the "true model", the AIC is an estimate value only between the models considered \cite{vrieze2012model}. It consists of two variables, the likelihood function (a loss function) which results in a Maximum Likelihood Estimate of the parameters, and the number of parameters in the model \cite{vrieze2012model}. The formual is given below, where $\alpha$ is known as the penalty coefficient (with a value of 2), $\kappa$ is the number of parameters and $\mathcal{L}$ is the Maximum Likelihood Estimate of the parameters.
+Model fits be will be assessed using the Akaike Information Criterion (AIC), which is a relative comparison where the best fit is the model with the minimum value \cite{vrieze2012model,posada2004model}. The AIC is a criterion used to assess the model fits. It is a relative measure of the Kullback-Leibler divergence estimate. Meaning that whereas the K-L divergence measures the deviation of a model from the "true model", the AIC is an estimate value only between the models considered \cite{vrieze2012model}. It consists of two variables, the likelihood function (a loss function) which results in a Maximum Likelihood Estimate of the parameters, and the number of parameters in the model \cite{vrieze2012model}. The formual is given below, where $\alpha$ is known as the penalty coefficient (with a value of 2), $\kappa$ is the number of parameters and $\mathcal{L}$ is the Maximum Likelihood Estimate of the parameters.
 
 \textit{Akaike Information Criterion}
 \begin{equation*}
@@ -121,18 +121,17 @@ $N_0$ is the starting population value at the first-time recording, thus the fir
     \frac{dx}{dt}=\frac{x_{i+1}-x_{i}}{t_{i+1}-t_{i}}\label{eq:slope} \tag{4}
 \end{equation*}
 Where $dx$ represents the change in population count from time $i$, to time, $i+1$. Starting from the first data point and iterating to the final two data points, each iteration calculated the slope between the adjacent data points, saving all results in a vector and the largest value was taken to be the $r_{max}$. Any negative growth rate slopes $r_{max}$ would be set to NA, to prevent model fitting
-
-The models include a time lag, which is a delay in time of bacteria growth. The estimation is found through the intersection between the lag phase, which can be represented by the starting population value, and exponential growth phase, represented by the slope of the growth rate \cite{peleg2011microbial}. This was calculated by the intersection of y=$N_0$ and the line with gradient $r_{max}$. Using the y-intercept ($y_{int}$) value from the $r_{max}$ line. Rearranging of the linear equation leads to the formula:
-\begin{equation*}
-   t_{lag}=\frac{N_0 - y_{int}}{r_{max}}
-\end{equation*}
-Should $t_{lag}$ be negative, but the $r_{max}$ positive, its value would be set to $0$. Figure 1 below shows an example of this derivation.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{../Results/Parameters_Ecoli.pdf}
 \caption{The first replicate of species Escherichia coli grown in medium of Vacuum Beef Striploin at a temperature of 8\degree C. The blue lines represent $N_0$ (lower blue line) and $N_{max}$ (upper blue line). The red line represents the slope representing $r_{max}$. Finally the green line is the estimate of the $t_{lag}$, where x-value of the intersection of the red and green is the parameter estimate.}
 \label{fig:Starting parameters}
 \end{figure}
+The models include a time lag, which is a delay in time of bacteria growth. The estimation is found through the intersection between the lag phase, which can be represented by the starting population value, and exponential growth phase, represented by the slope of the growth rate \cite{peleg2011microbial}. This was calculated by the intersection of y=$N_0$ and the line with gradient $r_{max}$. Using the y-intercept ($y_{int}$) value from the $r_{max}$ line. Rearranging of the linear equation leads to the formula:
+\begin{equation*}
+   t_{lag}=\frac{N_0 - y_{int}}{r_{max}}
+\end{equation*}
+Should $t_{lag}$ be negative, but the $r_{max}$ positive, its value would be set to $0$. Figure 1 below shows an example of this derivation.
 
 Species and medium were the factors accounted for when identifying the correlation between temperature and growth rate. For each of the unique ID’s, the growth rates, temperatures, Species and growth medium were recorded in a large matrix. The matrix was subset to the different unique ID’s and linear regression analysis was done to analyse the correlation.
 
@@ -175,6 +174,8 @@ In the additional investigation from the paper, conceptual temperature recording
 
 \section{Discussion}
 \subsection{Wrangled data and starting parameters}
+
+Distribution of the data sets were not consistent as some plots revealed no pattern, having a random distribution of points along the axis, unable to derive starting parameter values and overall fit the models. Furthermore, some of the data sets revealed a decline once the asymptotic value has been reached. This is the death phase which is ignored in the model fitting process \cite{zwietering1990modeling}. Getting all required starting parameters was necessary for the model fittings to be produced. Despite not all the data sets having a sigmoidal or log distribution, positive $r_{max}$ and  $t_{lag}$ values were still derived from all the data sets. Although the Logistic model only requires three of the starting parameters, the growth rate parameter is the determining factor of all the models fitting. Starting population ($N_0$) and carrying capacity ($N_{max}$) are easily derived from the data sets however, growth rate and time lag are mathematical derivations, thus have the possibility of having NA values depending on the distribution of data points. The growth rate coefficient represents the max slope between points, which is the derivative along the inflection point. While the $t_{lag}$ requires the y-intercept of $r_{max}$ slope as well as the actual slope value to derive it.
 \begin{wrapfigure}{r}{0.4\textwidth}
     \begin{center}
         \includegraphics[width=0.48\textwidth]{../Results/Cmichiganensis25_fit.pdf}
@@ -183,27 +184,25 @@ In the additional investigation from the paper, conceptual temperature recording
     \label{fig:Clavibacter michiganensis}
 \end{wrapfigure}
 
-Distribution of the data sets were not consistent as some plots revealed no pattern, having a random distribution of points along the axis, unable to derive starting parameter values and overall fit the models. Furthermore, some of the data sets revealed a decline once the asymptotic value has been reached. This is the death phase which is ignored in the model fitting process \cite{zwietering1990modeling}. Getting all required starting parameters was necessary for the model fittings to be produced. Despite not all the data sets having a sigmoidal or log distribution, positive $r_{max}$ and  $t_{lag}$ values were still derived from all the data sets. Although the Logistic model only requires three of the starting parameters, the growth rate parameter is the determining factor of all the models fitting. Starting population ($N_0$) and carrying capacity ($N_{max}$) are easily derived from the data sets however, growth rate and time lag are mathematical derivations, thus have the possibility of having NA values depending on the distribution of data points. The growth rate coefficient represents the max slope between points, which is the derivative along the inflection point. While the $t_{lag}$ requires the y-intercept of $r_{max}$ slope as well as the actual slope value to derive it.
+All four models were nested upon each other, utilising similar parameters. The Logistic model is derived from external limiting factors including resource and density. These external factors play limit the exponential growth of the population, hence producing the sigmoidal shape where it reaches an asymptotic value \cite{webb1986logistic}. The Baranyi model is a differential model which accounts biological factors of individual microbial growth. It takes into account environmental variation and the physiological limiting factors, specifically the limits in the rate of biochemical reactions within the microbe \cite{buchanan1997simple,grijspeerdt1999estimating}. The Buchanan model is a simplified version of the Gompertz model and Baranyi model, which accounts for biological variability, considering individual physiological factors and population factors such as adaptation at each of the growth phases to produce a three-phase linear model \cite{buchanan1997simple}.
 
 \subsection{Model fitting}
 \begin{figure*}[h!]
     \centering
     \begin{subfigure}[h]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../Results/Lplantarum_fit.pdf}
-        \caption{Figure 3.1: Lactobaciulus plantarum model fit}
+        \caption{Figure 4.1: Lactobaciulus plantarum model fit}
         \label{fig:Lactobaciulus plantarum}
     \end{subfigure}
     \hfill
     \begin{subfigure}[h]{0.4\textwidth}
         \includegraphics[width=\textwidth]{../Results/Smaltophilia25_fit.pdf}
-        \caption{Figure 3.2: Stenotrophomonas maltophilia model fit}
+        \caption{Figure 4.2: Stenotrophomonas maltophilia model fit}
         \label{fig:Stenotrophomonas maltophilia}
     \end{subfigure}
 \end{figure*}
 
-All four models were nested upon each other, utilising similar parameters. The Logistic model is derived from external limiting factors including resource and density. These external factors play limit the exponential growth of the population, hence producing the sigmoidal shape where it reaches an asymptotic value \cite{webb1986logistic}. The Baranyi model is a differential model which accounts biological factors of individual microbial growth. It takes into account environmental variation and the physiological limiting factors, specifically the limits in the rate of biochemical reactions within the microbe \cite{buchanan1997simple, grijspeerdt1999estimating}. The Buchanan model is a simplified version of the Gompertz model and Baranyi model, which accounts for biological variability, considering individual physiological factors and population factors such as adaptation at each of the growth phases to produce a three-phase linear model \cite{buchanan1997simple}.
-
-Overall, the results show that the Gompertz model was the most robust model, having the greatest number of goodness of fit. In other words, for the provided data set, it is the best model to describe the population dynamics of microbial growth over time. This is not surprising as it is a primary level model, which only describes change population over time \cite{grijspeerdt1999estimating}. The Gompertz model is mathematical derivations to form the sigmoidal relationship \cite{buchanan1997simple} et al., 1997). Despite its parameters, it is an empirical derivation not accounting for any biological processes. The robustness of the model is from the parameters. The parameters account for shape or curvature of the fit, and location along the axis, allowing the model to shift the fit along the x-axis or y-axis and maintain its overall shape \cite{tjorve2017use}. Furthermore, similar to the method of deriving the growth rate from the data sets, the growth rate in the Gompertz model is derived along the inflection point.
+Overall, the results show that the Gompertz model was the most robust model, having the greatest number of goodness of fit. In other words, for the provided data set, it is the best model to describe the population dynamics of microbial growth over time. This is not surprising as it is a primary level model, which only describes change population over time \cite{grijspeerdt1999estimating}. The Gompertz model is mathematical derivations to form the sigmoidal relationship \cite{buchanan1997simple}. Despite its parameters, it is an empirical derivation not accounting for any biological processes. The robustness of the model is from the parameters. The parameters account for shape or curvature of the fit, and location along the axis, allowing the model to shift the fit along the x-axis or y-axis and maintain its overall shape \cite{tjorve2017use}. Furthermore, similar to the method of deriving the growth rate from the data sets, the growth rate in the Gompertz model is derived along the inflection point.
 
 \subsection{AIC}
 
@@ -214,9 +213,6 @@ Best fitting model was determined through the AIC values produced. From the resu
 \centering
 \includegraphics[scale=0.60]{../Results/Species_ConceptualTemp.pdf} \caption{Provided conceptual temperatures of species in data set} \label{tab:Conceptual Temperature}
 \end{table}
-
-Using the species with recordings of conceptual temperature, the plots show that there is a strong positive correlation between growth rate and temperature. A linear regression analysis was done and also fitting the the formula given from \textit{Ratkowsky et al.} Unlike the original paper, the distribution of points were not as linear but this is likely due to data collection methods from the data provided as well as physiological differences of the species. Using the linear regression analysis, x-intercept values were calculated to see if they coincide with conceptual temperatures \cite{ratkowsky1982relationship}. The x-intercepts vary from the conceptual temperatures provided from the paper. From the plot, aside from the \textit{Aerobic Mesophilic} in \textit{Cooked Chicken Breast}, the Conceptual Temperature model did not align with the data well.
-
 \begin{wrapfigure}{r}{0.3\textwidth}
     \begin{center}
         \includegraphics[width=0.40\textwidth]{../Results/Ecoli_r_temp.pdf}
@@ -224,8 +220,9 @@ Using the species with recordings of conceptual temperature, the plots show that
     \caption{Escherichia Coli recorded growth rates plotted against temperature}
     \label{fig:E.coli correlation}
 \end{wrapfigure}
+Using the species with recordings of conceptual temperature, the plots show that there is a strong positive correlation between growth rate and temperature. A linear regression analysis was done and also fitting the the formula given from \textit{Ratkowsky et al.} Unlike the original paper, the distribution of points were not as linear but this is likely due to data collection methods from the data provided as well as physiological differences of the species. Using the linear regression analysis, x-intercept values were calculated to see if they coincide with conceptual temperatures \cite{ratkowsky1982relationship}. The x-intercepts vary from the conceptual temperatures provided from the paper. From the plot, aside from the \textit{Aerobic Mesophilic} in \textit{Cooked Chicken Breast}, the Conceptual Temperature model did not align with the data well.
 
-Furthermore looking at the regression analysis, if we use a significance value of 0.05, using fisher’s method for independent test statistics, which takes the logarithm of the p-values \cite[p.103]{fisher1992statistical}. The resulting p-value is much less than the significant level. This means that the slopes are statistically significant, not random and support the positive correlation between temperature and growth rate. Only five species were investigated but further analysis can be done as conceptual temperature values are collected for the other species in the provided data. Overall, the results show that temperature and growth rate are positively correlated.\\
+Furthermore looking at the regression analysis, if we use a significance value of 0.05, using fisher’s method for independent test statistics, which takes the logarithm of the p-values \cite[p.103]{fisher1992statistical}.The resulting p-value is much less than the significant level. This means that the slopes are statistically significant, not random and support the positive correlation between temperature and growth rate. Only five species were investigated but further analysis can be done as conceptual temperature values are collected for the other species in the provided data. Overall, the results show that temperature and growth rate are positively correlated.
 
 \section{Conclusion}
 In conclusion, the Gompertz model performed well due to its derivations. As mentioned in the Discussion, the parameters and its values are empirically derived. Similar to the Logistic model, its parameters do not consider the physiology or limiting factors of the organism, just the rate at which it divides. Furthermore, compared to the Logistic model, it takes in an extra parameters that makes it more robust and flexible.

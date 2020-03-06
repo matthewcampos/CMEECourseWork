@@ -24,6 +24,23 @@ for (i in 1:length(rda_list)){
 table(is.na(starting_parameter_values[,1])) #counts how many NA in r_max and t_lag
 dev.off()
 
+#Example parameter fit
+pdf(paste("../Results/Parameters_Ecoli.pdf")) #open pdf
+load(rda_list[285])
+r_start <- r_value(data)[1]
+x <- seq(0,max(data$Time))
+y<-c()
+y_axis<-c((r_start*x)+r_value(data)[2],y)
+N0_start <- N_max_N0_parameter_values(data)[1]
+Nmax_start <- N_max_N0_parameter_values(data)[2]
+tlag_start <- t_lag_parameter_value(data)
+plot(data,pch=19,main=c(ID[1],ID[2],ID[3],ID[4]))
+abline(h=N0_start,col="blue")
+abline(h=Nmax_start,col="blue")
+abline(h=tlag_start,col="green")
+lines(data$Time,y_axis,col="red")
+dev.off()
+
 #create dataframe with AIC values
 aic_results_df <- data.frame(matrix(ncol = 4, nrow = length(rda_list)))
 names_col <- c("Logistic", "Baranyi", "Gompertz", "Buchanan")
@@ -39,7 +56,7 @@ for (len in 1:length(rda_list)){
   N_0_start <- N_max_N0_parameter_values(data)[1]
   N_max_start <- N_max_N0_parameter_values(data)[2]
   t_lag_start <- t_lag_parameter_value(data)
-  x <- seq(min(data),max(data))
+  x <- seq(min(data$Time),max(data$Time))
   
   #Plot data
   plot(data,pch=19,xlab="Time",y="Log10(Abundance)",main=c(ID[1],ID[2],ID[3],ID[4]),cex=0.8)
@@ -127,6 +144,7 @@ for (i in 1:length(rda_list)){
 }
 
 #barplot to visualise best fit
+pdf(paste("../Results/bestfit_barplot.pdf"))
 bp <- barplot(best_fit,main="Lowest AIC Count",ylab="count",col = "grey")
 text(bp, 0, as.numeric(best_fit), cex=1, pos=3) #add values to each bar plot
 dev.off()
@@ -145,8 +163,196 @@ aic_results_df$Buchanan[Inf_index] <- 0
 result <- colSums(aic_results_df != 0) #get count for each column for values not equal to 0
 
 #barplot
+pdf(paste("../Results/Fit_count.pdf"))
 bp2 <- barplot(result,main="Fit Count",ylab="count",col = "grey")
 text(bp2, 0, as.numeric(result), cex=1, pos=3) #add values to each bar plot
+dev.off()
+
+#Example NLS fits
+pdf(paste("../Results/Cmichiganensis25_fit.pdf")) 
+tryCatch({
+load(rda_list[208])
+r_max_start <- r_value(data)[1]
+N_0_start <- N_max_N0_parameter_values(data)[1]
+N_max_start <- N_max_N0_parameter_values(data)[2]
+t_lag_start <- t_lag_parameter_value(data)
+x <- seq(min(data$Time),max(data$Time))
+
+#Plot data
+plot(data,pch=19,xlab="Time",y="Log10(Abundance)",main=c(ID[1],ID[2],ID[3],ID[4]),cex=0.8)
+legend("bottom",xpd=TRUE,horiz=TRUE,inset=c(-0.2,-0.2), bty="n",legend = c("Logistic","Baranyi","Gompertz","Buchanan"),col=c("blue", "red","purple","green"), lty=1:4, cex=0.8)
+
+#Logistic Fit
+fit_logistic <- nlsLM(data$Abundance ~ Logistic_model(t = data$Time, r_max, N_max, N_0), data,
+                      list(r_max = r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Logistic_AIC <- AIC(fit_logistic)
+summary_logistic <- summary(fit_logistic)
+r_fit <- summary_logistic$coefficients[1,1]
+N0_fit <- summary_logistic$coefficients[2,1]
+K_fit <- summary_logistic$coefficients[3,1]
+logistic_points <- Logistic_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit)
+lines(logistic_points~x, col="blue",lty=1,lwd=2)
+
+#Baranyi Fit
+fit_baranyi <- nlsLM(data$Abundance ~ Baranyi_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                     list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Baranyi_AIC <- AIC(fit_baranyi)
+summary_baranyi <- summary(fit_baranyi)
+t_lag_fit <- summary_baranyi$coefficients[1,1]
+r_fit <- summary_baranyi$coefficients[2,1]
+N0_fit <- summary_baranyi$coefficients[3,1]
+K_fit <- summary_baranyi$coefficients[4,1]
+baranyi_points <- Baranyi_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(baranyi_points~x, col="red",lty=2,lwd=2)
+
+#Gompertz fit
+fit_gompertz <- nlsLM(data$Abundance ~ Gompertz_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Gompertz_AIC <- AIC(fit_gompertz)
+summary_gompertz <- summary(fit_gompertz)
+t_lag_fit <- summary_gompertz$coefficients[1,1]
+r_fit <- summary_gompertz$coefficients[2,1]
+N0_fit <- summary_gompertz$coefficients[3,1]
+K_fit <- summary_gompertz$coefficients[4,1]
+gompertz_points <- Gompertz_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(gompertz_points~x, col="purple",lty=3,lwd=2)
+
+#Buchanan Fit
+fit_buchanan <- nlsLM(data$Abundance ~ Buchanan_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Buchanan_AIC <- AIC(fit_buchanan)
+summary_buchanan <- summary(fit_buchanan)
+t_lag_fit <- summary_buchanan$coefficients[1,1]
+r_fit <- summary_buchanan$coefficients[2,1]
+N0_fit <- summary_buchanan$coefficients[3,1]
+K_fit <- summary_buchanan$coefficients[4,1]
+buchanan_points <- Buchanan_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(buchanan_points~x, col="green",lty=4,lwd=2)
+}, error=function(e){}) 
+dev.off()
+
+pdf(paste("../Results/Smaltophilia25_fit.pdf")) 
+tryCatch({
+load(rda_list[264])
+r_max_start <- r_value(data)[1]
+N_0_start <- N_max_N0_parameter_values(data)[1]
+N_max_start <- N_max_N0_parameter_values(data)[2]
+t_lag_start <- t_lag_parameter_value(data)
+x <- seq(min(data$Time),max(data$Time))
+
+#Plot data
+plot(data,pch=19,xlab="Time",y="Log10(Abundance)",main=c(ID[1],ID[2],ID[3],ID[4]),cex=0.8)
+legend("bottom",xpd=TRUE,horiz=TRUE,inset=c(-0.2,-0.2), bty="n",legend = c("Logistic","Baranyi","Gompertz","Buchanan"),col=c("blue", "red","purple","green"), lty=1:4, cex=0.8)
+
+#Logistic Fit
+fit_logistic <- nlsLM(data$Abundance ~ Logistic_model(t = data$Time, r_max, N_max, N_0), data,
+                      list(r_max = r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Logistic_AIC <- AIC(fit_logistic)
+summary_logistic <- summary(fit_logistic)
+r_fit <- summary_logistic$coefficients[1,1]
+N0_fit <- summary_logistic$coefficients[2,1]
+K_fit <- summary_logistic$coefficients[3,1]
+logistic_points <- Logistic_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit)
+lines(logistic_points~x, col="blue",lty=1,lwd=2)
+
+#Baranyi Fit
+fit_baranyi <- nlsLM(data$Abundance ~ Baranyi_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                     list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Baranyi_AIC <- AIC(fit_baranyi)
+summary_baranyi <- summary(fit_baranyi)
+t_lag_fit <- summary_baranyi$coefficients[1,1]
+r_fit <- summary_baranyi$coefficients[2,1]
+N0_fit <- summary_baranyi$coefficients[3,1]
+K_fit <- summary_baranyi$coefficients[4,1]
+baranyi_points <- Baranyi_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(baranyi_points~x, col="red",lty=2,lwd=2)
+
+#Gompertz fit
+fit_gompertz <- nlsLM(data$Abundance ~ Gompertz_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Gompertz_AIC <- AIC(fit_gompertz)
+summary_gompertz <- summary(fit_gompertz)
+t_lag_fit <- summary_gompertz$coefficients[1,1]
+r_fit <- summary_gompertz$coefficients[2,1]
+N0_fit <- summary_gompertz$coefficients[3,1]
+K_fit <- summary_gompertz$coefficients[4,1]
+gompertz_points <- Gompertz_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(gompertz_points~x, col="purple",lty=3,lwd=2)
+
+#Buchanan Fit
+fit_buchanan <- nlsLM(data$Abundance ~ Buchanan_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Buchanan_AIC <- AIC(fit_buchanan)
+summary_buchanan <- summary(fit_buchanan)
+t_lag_fit <- summary_buchanan$coefficients[1,1]
+r_fit <- summary_buchanan$coefficients[2,1]
+N0_fit <- summary_buchanan$coefficients[3,1]
+K_fit <- summary_buchanan$coefficients[4,1]
+buchanan_points <- Buchanan_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(buchanan_points~x, col="green",lty=4,lwd=2)
+}, error=function(e){}) 
+dev.off()
+
+pdf(paste("../Results/Lplantarum_fit.pdf")) 
+tryCatch({
+load(rda_list[89])
+r_max_start <- r_value(data)[1]
+N_0_start <- N_max_N0_parameter_values(data)[1]
+N_max_start <- N_max_N0_parameter_values(data)[2]
+t_lag_start <- t_lag_parameter_value(data)
+x <- seq(min(data$Time),max(data$Time))
+
+#Plot data
+plot(data,pch=19,xlab="Time",y="Log10(Abundance)",main=c(ID[1],ID[2],ID[3],ID[4]),cex=0.8)
+legend("bottom",xpd=TRUE,horiz=TRUE,inset=c(-0.2,-0.2), bty="n",legend = c("Logistic","Baranyi","Gompertz","Buchanan"),col=c("blue", "red","purple","green"), lty=1:4, cex=0.8)
+
+#Logistic Fit
+fit_logistic <- nlsLM(data$Abundance ~ Logistic_model(t = data$Time, r_max, N_max, N_0), data,
+                      list(r_max = r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Logistic_AIC <- AIC(fit_logistic)
+summary_logistic <- summary(fit_logistic)
+r_fit <- summary_logistic$coefficients[1,1]
+N0_fit <- summary_logistic$coefficients[2,1]
+K_fit <- summary_logistic$coefficients[3,1]
+logistic_points <- Logistic_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit)
+lines(logistic_points~x, col="blue",lty=1,lwd=2)
+
+#Baranyi Fit
+fit_baranyi <- nlsLM(data$Abundance ~ Baranyi_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                     list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Baranyi_AIC <- AIC(fit_baranyi)
+summary_baranyi <- summary(fit_baranyi)
+t_lag_fit <- summary_baranyi$coefficients[1,1]
+r_fit <- summary_baranyi$coefficients[2,1]
+N0_fit <- summary_baranyi$coefficients[3,1]
+K_fit <- summary_baranyi$coefficients[4,1]
+baranyi_points <- Baranyi_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(baranyi_points~x, col="red",lty=2,lwd=2)
+
+#Gompertz fit
+fit_gompertz <- nlsLM(data$Abundance ~ Gompertz_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Gompertz_AIC <- AIC(fit_gompertz)
+summary_gompertz <- summary(fit_gompertz)
+t_lag_fit <- summary_gompertz$coefficients[1,1]
+r_fit <- summary_gompertz$coefficients[2,1]
+N0_fit <- summary_gompertz$coefficients[3,1]
+K_fit <- summary_gompertz$coefficients[4,1]
+gompertz_points <- Gompertz_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(gompertz_points~x, col="purple",lty=3,lwd=2)
+
+#Buchanan Fit
+fit_buchanan <- nlsLM(data$Abundance ~ Buchanan_model(t = data$Time, r_max, N_max, N_0, t_lag), data,
+                      list(t_lag=t_lag_start, r_max=r_max_start, N_0 = N_0_start, N_max = N_max_start))
+Buchanan_AIC <- AIC(fit_buchanan)
+summary_buchanan <- summary(fit_buchanan)
+t_lag_fit <- summary_buchanan$coefficients[1,1]
+r_fit <- summary_buchanan$coefficients[2,1]
+N0_fit <- summary_buchanan$coefficients[3,1]
+K_fit <- summary_buchanan$coefficients[4,1]
+buchanan_points <- Buchanan_model(t=x, r_max = r_fit, N_max = K_fit, N_0 = N0_fit, t_lag = t_lag_fit)
+lines(buchanan_points~x, col="green",lty=4,lwd=2)
+}, error=function(e){}) 
 dev.off()
 
 

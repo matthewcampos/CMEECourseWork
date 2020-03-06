@@ -49,6 +49,7 @@ pdf("../Results/Species_ConceptualTemp.pdf",height = 3, width = 4)
 grid.table(species_T0)
 dev.off()
 
+#temperature vs. growth rate plot for species
 pdf(paste("../Results/Growth_vs_temp.pdf")) #open pdf
 for (i in 1:length(species_unique)){
   growth_species_subset <- subset(growth_rate_df,growth_rate_df$Species == species_unique[i]) #filter each loop first by species
@@ -92,6 +93,31 @@ pdf("../Results/Temperature_Growthrate.pdf",height = 5, width = 8.5)
 grid.table(cor_df)
 dev.off()
 
-
-
+#Example E.coli
+pdf(paste("../Results/Ecoli_r_temp.pdf")) #open pdf
+growth_species_subset <- subset(growth_rate_df,growth_rate_df$Species == species_unique[2]) #filter each loop first by species
+medium_unique <- unique(growth_species_subset$Medium) #find the different mediums of the species
+growth_subset <- subset(growth_species_subset, growth_species_subset$Medium == medium_unique[2]) #produce a filtered table of species and specific medium
+reorder <- order(growth_subset$Temperature) #output is the index of increasing order of temperature
+growth_subset <- growth_subset[reorder,] #rearrange based on the index output
+species_vect <- c(growth_subset[1,1], species_vect)
+medium_vect <- c(growth_subset[1,2], medium_vect)
+growth_subset <- growth_subset[ ,c(-1,-2)] #remove unwanted column of species and medium
+growth_subset[,2] <- (growth_subset[,2])^0.5 
+lm_analysis <- lm(growth_subset$`Growth rate`~growth_subset$Temperature)
+analysis_summary <- summary(lm_analysis)
+x_intercept <- (0-analysis_summary$coefficients[1,1])/analysis_summary$coefficients[2,1]
+cor_vect <- c(analysis_summary$r.squared^0.5, cor_vect) #correlation is the square root
+p_value <- c((analysis_summary$coefficients[2,4]), p_value)
+plot(growth_subset$Temperature,growth_subset$`Growth rate`,main = paste(species_unique[2],"in",medium_unique[2]),xlab = "Temperature", ylab = "Max Growth Rates",pch=19) 
+x_axis <- seq(min(growth_subset$Temperature)-10,max(growth_subset$Temperature)+10)
+t <- x_axis - species_T0[i,2]
+y <- c()
+y <- c(analysis_summary$coefficients[2,1]*(t),y)
+lines(t,y,col="blue")
+abline(lm_analysis,col="red")
+legend("top", legend = paste("r=",analysis_summary$r.squared^0.5),box.lty = 0, cex = 0.6)
+legend("topleft", legend = paste("x intercept=",x_intercept),box.lty = 0, cex = 0.6)
+legend("bottomright", legend=c("Linear Regression", "Conceptual Temperature"),col=c("red", "blue"), lty=1:1, cex=0.6)  
+dev.off()
 
