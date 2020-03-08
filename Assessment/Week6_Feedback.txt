@@ -1,0 +1,122 @@
+Starting weekly assessment for Matthew Paul, Week6
+
+Current Points = 100
+
+Note that: 
+(1) Major sections begin with a double "====" line 
+(2) Subsections begin with a single "====" line 
+(3) Code output or text file content are printed within single "*****" lines 
+
+======================================================================
+======================================================================
+Your Git repo size this week is about 144.32 MiB on disk 
+
+PART 1: Checking project workflow...
+
+Found the following directories in parent directory: Week1, Week7, Assessment, Genomics_and_Bioinformatics, HPC, Week2, Biological Data Structure and C Programming, GIS, .git, Computing Miniproject, Week3, Statistics
+
+Found the following files in parent directory: README.txt, .gitignore
+
+Checking for key files in parent directory...
+
+Found .gitignore in parent directory, great! 
+
+Printing contents of .gitignore:
+**********************************************************************
+.DS_Store
+*~
+*.tmp
+*.pyc
+.Rhistory
+_pycache_
+.idea/
+**********************************************************************
+
+Found README in parent directory, named: README.txt
+
+Printing contents of README.txt:
+**********************************************************************
+#CMEE Coursework Repository
+###Week 1
+**Sections covered**:
+* Unix
+* Shell script
+* Version Control with Git
+* Scientific Documentation with LATEX
+
+###Week 2
+**Sections covered**:
+* Biological Computing in Python-I
+
+###Week 3
+**Sections covered**:
+* Biological Computing in R
+* Data management, exploration, and visualisation
+
+###Week 4
+**Sections covered**:
+* Statistics
+  - Lectures'18
+  - HandOutsandData'18
+
+###Week 5
+**Sections covered**:
+* Statistics
+  - Lectures'18
+  - HandOutsandData'18
+* Computing Miniproject
+* GIS
+  - Data
+  - Sandbox
+
+###Week 6
+**Sections covered**:
+* Genomics_and_Bioinformatics
+  - Alleles.R
+  - Coalescence.R
+  - Demography.R
+  - Divergence.R
+
+###Week 7
+**Sections covered**:
+* Biological Computing in Python-II
+
+###Week 8
+**Sections covered**:
+* Computing Miniproject
+
+###Week 9
+**Sections covered**:
+* HPC
+  - mlc19_HPC_2019_main.R - contains all functions
+  - mlc19_HPC_2019_test.R - test the functions using parameters required
+  - mlc19_HPC_2019_cluster.R - code to set iterations in HPC
+  - mlc19_cluster_run.sh - bash script to run in HPC
+  - RDA_results - cluster run results from HPC
+  - o_results - output file results from HPC run
+  - e_results - error file results from HPC run
+
+###Week 10
+**Sections covered**:
+* Biological Data Structure and C Programming
+**********************************************************************
+
+======================================================================
+Looking for the weekly directories...
+
+Found 4 weekly directories: Week1, Week2, Week3, Week7
+
+The Week6 directory will be assessed 
+
+======================================================================
+======================================================================
+PART 2: Checking weekly code and workflow...
+
+======================================================================
+======================================================================
+
+FINISHED WEEKLY ASSESSMENT
+
+Current Points for the Week = 100
+
+NOTE THAT THESE ARE POINTS, NOT MARKS FOR THE WEEK!

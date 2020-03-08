@@ -9,19 +9,28 @@ Note that:
 
 ======================================================================
 ======================================================================
-Your Git repo size this week is about 1.57 MiB on disk 
+Your Git repo size this week is about 144.32 MiB on disk 
 
 PART 1: Checking project workflow...
 
-Found the following directories in parent directory: Week1, Assessment, Week2, .git
+Found the following directories in parent directory: Week1, Week7, Assessment, Genomics_and_Bioinformatics, HPC, Week2, Biological Data Structure and C Programming, GIS, .git, Computing Miniproject, Week3, Statistics
 
-Found the following files in parent directory: README.txt, FileToRem.txt, temporary.tmp, .gitattributes
+Found the following files in parent directory: README.txt, .gitignore
 
 Checking for key files in parent directory...
 
-.gitignore missing, 1 pt deducted
+Found .gitignore in parent directory, great! 
 
-Current Points = 99
+Printing contents of .gitignore:
+**********************************************************************
+.DS_Store
+*~
+*.tmp
+*.pyc
+.Rhistory
+_pycache_
+.idea/
+**********************************************************************
 
 Found README in parent directory, named: README.txt
 
@@ -38,12 +47,64 @@ Printing contents of README.txt:
 ###Week 2
 **Sections covered**:
 * Biological Computing in Python-I
+
+###Week 3
+**Sections covered**:
+* Biological Computing in R
+* Data management, exploration, and visualisation
+
+###Week 4
+**Sections covered**:
+* Statistics
+  - Lectures'18
+  - HandOutsandData'18
+
+###Week 5
+**Sections covered**:
+* Statistics
+  - Lectures'18
+  - HandOutsandData'18
+* Computing Miniproject
+* GIS
+  - Data
+  - Sandbox
+
+###Week 6
+**Sections covered**:
+* Genomics_and_Bioinformatics
+  - Alleles.R
+  - Coalescence.R
+  - Demography.R
+  - Divergence.R
+
+###Week 7
+**Sections covered**:
+* Biological Computing in Python-II
+
+###Week 8
+**Sections covered**:
+* Computing Miniproject
+
+###Week 9
+**Sections covered**:
+* HPC
+  - mlc19_HPC_2019_main.R - contains all functions
+  - mlc19_HPC_2019_test.R - test the functions using parameters required
+  - mlc19_HPC_2019_cluster.R - code to set iterations in HPC
+  - mlc19_cluster_run.sh - bash script to run in HPC
+  - RDA_results - cluster run results from HPC
+  - o_results - output file results from HPC run
+  - e_results - error file results from HPC run
+
+###Week 10
+**Sections covered**:
+* Biological Data Structure and C Programming
 **********************************************************************
 
 ======================================================================
 Looking for the weekly directories...
 
-Found 2 weekly directories: Week1, Week2
+Found 4 weekly directories: Week1, Week2, Week3, Week7
 
 The Week1 directory will be assessed 
 
@@ -54,9 +115,9 @@ PART 2: Checking weekly code and workflow...
 ======================================================================
 Assessing WEEK1...
 
-Found the following directories: Code, sandbox, Data, Results
+Found the following directories: Code, Data, Sandbox, Results
 
-Found the following files: README.txt, .gitignore
+Found the following files: README.txt
 
 Checking for readme file in weekly directory...
 
@@ -125,14 +186,14 @@ Printing contents of README.txt:
 **Results**
 **********************************************************************
 
-Found following files in results directory: ...
+Found following files in results directory: READMEResults.txt...
 
 Found 12 code files: ConcatenateTwoFiles.sh, CompileLaTex.sh, CountLines.sh, variables.sh, tiff2png.sh, csvtospace.sh, FirstExample.tex, MyExampleScript.sh, FirstBiblio.bib, UnixPrac1.txt, tabtocsv.sh, boilerplate.sh
 
-Found the following extra files: FirstExample.bbl, gi, FirstExample.blg, FirstExample.pdf
+Found the following extra files: FirstExample.pdf
 0.5 pt deducted per extra file
 
-Current Points = 97.0
+Current Points = 99.5
 
 ======================================================================
 Testing script/code files...
@@ -184,6 +245,11 @@ rm *.nav
 rm *.out
 rm *.snm
 rm *.toc
+rm -f texput.log
+mkdir -p compiled && mv $1.* compiled/
+find ./compiled -not -name $1.tex -not -name $1.pdf -type f -delete
+mv ./compiled/* . && rmdir compiled
+mv $1.pdf ../Results/
 **********************************************************************
 
 Testing CompileLaTex.sh...
@@ -218,30 +284,34 @@ rm: cannot remove '*.nav': No such file or directory
 rm: cannot remove '*.out': No such file or directory
 rm: cannot remove '*.snm': No such file or directory
 rm: cannot remove '*.toc': No such file or directory
+mv: cannot move '.' to 'compiled/.': Device or resource busy
+mv: cannot move '..' to 'compiled/..': Device or resource busy
+mv: cannot stat './compiled/*': No such file or directory
+mv: cannot stat '.pdf': No such file or directory
 
-** (evince:9703): WARNING **: Error when getting information for file '/home/mhasoba/Documents/Teaching/IC_CMEE/2019-20/Coursework/StudentRepos/MatthewPaulCampos_MLC19/Week1/Code/.pdf': No such file or directory
+** (evince:12942): WARNING **: Error when getting information for file '/home/mhasoba/Documents/Teaching/IC_CMEE/2019-20/Coursework/StudentRepos/MatthewPaulCampos_MLC19/Week1/Code/.pdf': No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
-** (evince:9703): WARNING **: Error setting file metadata: No such file or directory
+** (evince:12942): WARNING **: Error setting file metadata: No such file or directory
 
 ======================================================================
 Inspecting script file CountLines.sh...
@@ -423,7 +493,7 @@ Hello mhasoba
 
 Code ran without errors
 
-Time consumed = 0.00290s
+Time consumed = 0.00345s
 
 ======================================================================
 Inspecting script file FirstBiblio.bib...
@@ -500,7 +570,7 @@ Done!
 
 Code ran without errors
 
-Time consumed = 0.00634s
+Time consumed = 0.00513s
 
 ======================================================================
 Inspecting script file boilerplate.sh...
@@ -532,7 +602,7 @@ This is a shell script!
 
 Code ran without errors
 
-Time consumed = 0.00401s
+Time consumed = 0.00649s
 
 ======================================================================
 ======================================================================
@@ -545,6 +615,6 @@ Ran into 6 errors
 
 FINISHED WEEKLY ASSESSMENT
 
-Current Points for the Week = 97.0
+Current Points for the Week = 99.5
 
 NOTE THAT THESE ARE POINTS, NOT MARKS FOR THE WEEK!
