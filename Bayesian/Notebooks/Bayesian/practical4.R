@@ -17,7 +17,7 @@ obsSummaryStats <- calcSummaryStats(polar.brown.sfs)
 obsSummaryStats
 # These are the OBSERVED summary statistics! Keep them.
 
-nrSimul <- 1000 # but change this accordingly
+nrSimul <- 1e3 # but change this accordingly
 
 # first, set the path to the "ms" software you installed
 msDir <- "Software/msdir/ms" # this is my specific case, yours could be different
@@ -59,15 +59,15 @@ for (k in 1:dim(scale_data)[2]){
 }
 
 #checking plots
-#plot(mat[,10],scale_data[,1],main = paste(nam[1],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,2],main = paste(nam[2],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,3],main = paste(nam[3],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,4],main = paste(nam[4],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,5],main = paste(nam[5],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,6],main = paste(nam[6],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,7],main = paste(nam[7],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,8],main = paste(nam[8],cor(mat[,10],mat[,1])))
-#plot(mat[,10],scale_data[,9],main = paste(nam[9],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,1],main = paste(nam[1],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,2],main = paste(nam[2],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,3],main = paste(nam[3],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,4],main = paste(nam[4],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,5],main = paste(nam[5],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,6],main = paste(nam[6],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,7],main = paste(nam[7],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,8],main = paste(nam[8],cor(mat[,10],mat[,1])))
+plot(mat[,10],scale_data[,9],main = paste(nam[9],cor(mat[,10],mat[,1])))
 #keep fst 
 # you can even plot the simulated site frequency spectrum
 plot2DSFS(simulatedSFS, xlab="Polar", ylab="Brown", main="simulated 2D-SFS")

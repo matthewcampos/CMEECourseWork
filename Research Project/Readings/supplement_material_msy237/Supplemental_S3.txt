@@ -1,0 +1,73 @@
+/*
+	Script file for Step 3
+
+	Note that this script is presented and discussed in the paper
+	"Evolutionary modeling in SLiM 3 for beginners", by Benjamin C.
+	Haller and Philipp W. Messer. It is supplied as a standalone
+	file for use with SLiM and SLiMgui.
+*/
+
+// The model initialization has a few additions from previous steps.
+initialize() {
+	defineConstant("K", 1000);
+
+	// We define a couple of constants related to the shape of
+	// the phenotypic fitness function that we will use.
+	defineConstant("OPT", 10.0);
+	defineConstant("SIGMA", 5.0);
+	defineConstant("SCALE", dnorm(0.0, 0.0, SIGMA));
+
+	initializeMutationRate(1e-7);
+
+	// We define a neutral mutation type and a mutation type for
+	// QTLs.  The QTL mutation type uses its selection coefficient
+	// property to hold QTL effect sizes, drawn from a normal
+	// distribution (see discussion), and is not converted to
+	// substitution objects upon fixation since it will continue
+	// to influence phenotype, and thus fitness, even after fixing.
+	initializeMutationType("m1", 0.5, "f", 0.0);       // neutral
+	initializeMutationType("m2", 0.5, "n", 0.0, 0.2);  // QTL
+	m2.convertToSubstitution = F;
+	m2.color = "red";
+
+	// The chromosome receives mostly neutral mutations with a few
+	// QTLs mutations, according to the relative fractions here.
+	initializeGenomicElementType("g1", c(m1, m2), c(1.0, 0.001));
+	initializeGenomicElement(g1, 0, 1e6 - 1);
+	initializeRecombinationRate(1e-8);
+}
+
+// We produce custom output of mean phenotype values as we run
+1 early() {
+	sim.addSubpop("p1", K);
+	cat("Mean phenotype: 0.00");
+}
+
+// This fitness() callback overrides SLiM default way of handling fitness
+// calculations for m2 (which would involve multiplicative effects from
+// selection coefficients).  Instead, m2 mutations are defined here as
+// being neutral, regardless of their selection coefficients.  We will
+// use selection coefficients as additive effect sizes instead, below.
+fitness(m2) {
+	return 1.0;   // make QTLs intrinsically neutral
+}
+
+// This event runs late in every generation, both calculating phenotypes
+// and fitness effects, and producing custom output of mean phenotypes.
+1:10000 late() {
+	// Calculate the phenotype of each individual from the additive
+	// effects of all m2 mutations, and then set a fitness effect
+	// based on the phenotypic fitness function's evaluation of each
+	// individual's phenotype (see discussion).
+	inds = p1.individuals;
+	phenotypes = inds.sumOfMutationsOfType(m2);
+	inds.fitnessScaling = dnorm(phenotypes, OPT, SIGMA) / SCALE;
+	
+	// Produce custom output of the mean phenotype each generation,
+	// and end the simulation when the mean phenotype comes within
+	// a margin of 0.1 of the phenotypic optimum.
+	mean_phenotype = mean(phenotypes);
+	cat(format(", %.2f", mean_phenotype));
+	if (abs(mean_phenotype - OPT) < 0.1)
+		sim.simulationFinished();
+}
