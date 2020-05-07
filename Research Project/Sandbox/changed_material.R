@@ -13,3 +13,25 @@ fitness <- function(pop_array){
   fit_array <- array(data = fit_array, dim = c(row_pop_array,col_pop_array,h_pop_array))
   return(fit_array)
 }
+
+#Assign probabilities based on fitness
+probabilities <- function(fit_sum){
+  #fitness as a fraction of total representing probabilities
+  total <- sum(fit_sum) 
+  values <- c()
+  for (i in fit_sum){
+    values <- c(values,(i/total))
+  }
+  return(values)
+}
+
+mutation <- function(new_gen,pr){
+  probability <- runif(1,0,1)
+  if (probability <= pr){
+    individual <- sample(c(1:dim(new_gen)[1]),size = )
+    site <- sample(c(1:dim(new_gen)[2]),size = 1)
+    height <- sample(c(1:dim(new_gen)[3]),size = 1)
+    new_gen[individual,site,height] <- new_gen[individual,site,height] + runif(1,-1,1)
+  }
+  return(new_gen)
+}
