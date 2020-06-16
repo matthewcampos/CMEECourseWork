@@ -10,29 +10,27 @@ library(deSolve) #for integral of ODE
 library(zeallot) #for assigning variables
 
 #ARGUMENTS
-size <- 5 #population size
+size <- 100 #population size
 locus <- 12 #allele sites
-generations <- 10
+generations <- 500
+
+#List for fitness
+w_bar_list <- data.frame(matrix(NA,nrow = generations,ncol = 1))
+colnames(w_bar_list) <- 'average fitness'
 
 #SIMULATION
 #initial population
 init_pop_array <- population(size,locus) #main population 
-migrant_pop <- population(size,locus)
 
 #TEST randomly generate nucleotide sequences
 for (i in 1:dim(init_pop_array)[1]){
   for (j in 1:dim(init_pop_array)[3]){
     init_pop_array[i,,j] <- sample(runif(locus+5,0,1),locus,replace = TRUE)
-    migrant_pop[i,,j] <- sample(runif(locus+5,0,1),locus,replace = TRUE)
   }
 }
 init_pop_array
-migrant_pop
 
 #FOR CALCULATION OF Y VALUES
-#randomly generate x_j values starting at 0
-x_j <- data.frame(matrix(0, ncol = locus/2, nrow = size, byrow=TRUE))
-colnames(x_j) <- c(11,21,31,12,22,32)
 #randomly generate y_j values starting with 3 values
 y_j <- data.frame(matrix(runif(3,0,1), ncol = locus/4, nrow = size, byrow=TRUE))
 colnames(y_j) <- c(1,2,3)
@@ -47,33 +45,36 @@ for (i in 1:generations){
   #collect values
   df_pop <- as.data.frame(init_pop_array)
   colnames(df_pop) <- variables
-  #set 24 starting values
-  for (j in 1:24){
-    assign(variables[j],df_pop[,j])
+  #set the 24 starting values
+  for (m in 1:24){
+    assign(variables[m],df_pop[,m])
   }
-  #time to reach equilibrium values
-  time <- seq(0, 200, by = 0.1)
-  #initial state 
-  X11 <- runif(size,0,1) #generate starting values where X11+X12 is y1 and so on...
-  X12 <- runif(size,0,1)
-  X21 <- runif(size,0,1)
-  X22 <- runif(size,0,1)
-  X31 <- runif(size,0,1)
-  X32 <- runif(size,0,1)
-  state <- array(c(X11,X12,X21,X22,X31,X32),dim = c(size,6))
-  colnames(state) <- c('X11','X12','X21','X22','X31','X32')
-  #Parameters
-  parameters <-c(alpha11,alpha12,alpha21,alpha22,alpha31,alpha32,
-                 gamma11,gamma12,gamma21,gamma22,gamma31,gamma32,
-                 theta11,theta12,theta21,theta22,theta31,theta32,
-                 P11,P12,P21,P22,P31,P32)
-  #out order is- individual 1_11,2_11,...,n_11,1_12,2_12,..,n_12,1_21,...
-  out <- ode(y=state,times=time,parms=parameters,func = y_model)
-  #extract equilibrium values
-
-  #PRODUCE NEXT GENERATION
+  #collect values
+  alpha <- as.data.frame(init_pop_array[,c(1,5,9),c(1,2)])
+  colnames(alpha) <- c(11,21,31,12,22,32)
+  gamma <- as.data.frame(init_pop_array[,c(2,6,10),c(1,2)])
+  colnames(gamma) <- c(11,21,31,12,22,32)
+  theta <- as.data.frame(init_pop_array[,c(3,7,11),c(1,2)])
+  colnames(theta) <- c(11,21,31,12,22,32)
+  P <- as.data.frame(init_pop_array[,c(4,8,12),c(1,2)])
+  colnames(P) <- c(11,21,31,12,22,32)
+  
+  #mu values
+  mu <- mu_values(alpha,gamma)
+  
+  #y values
+  y_1 <- (mu$`11` * negative_R_j(y_j$`2`,theta$`21`,P$`21`)) + (mu$`12` * negative_R_j(y_j$`2`,theta$`22`,P$`22`))
+  y_2 <- (mu$`21` * positive_R_j(y_j$`1`,theta$`11`,P$`11`)) + (mu$`22` * positive_R_j(y_j$`1`,theta$`12`,P$`12`))
+  y_3 <- (mu$`31` * positive_R_j(y_j$`1`,theta$`31`,P$`31`)) + (mu$`32` * positive_R_j(y_j$`1`,theta$`32`,P$`32`))
+  
+  #average fitness
+  w_bar <- mean(y_1 + y_2 + y_3) 
+  w_bar_list[i,] <- w_bar
+  w_bar_list
+  
+  #PRODUCE NEXT GENERATION 
   #Determine Fitness
-  fit_array <- fitness(init_pop_array)
+  fit_array <- fitness(y_1,y_2,y_3)
   fit_array
   
   #matrix of parent combinations 
@@ -84,8 +85,8 @@ for (i in 1:generations){
   #remove repeating parents in same row
   parents <- parents[!parents[,1]==parents[,2],]
   
-  #randomly choose 100 of the combinations
-  parents <- parents[sample(1:nrow(parents), size),]
+  #randomly choose set from the combinations
+  parents <- parents[sample(1:nrow(parents), size=size,replace = TRUE),]
   
   #Next generation population array
   new_gen <- population(size,locus)
@@ -111,63 +112,12 @@ for (i in 1:generations){
     new_gen[k,,] <- recombination(new_gen[k,,])
   }
   #Mutation
-  new_gen <- mutation(new_gen,0.05)
-  print(new_gen)
+  new_gen <- mutation(new_gen,0.01)
   init_pop_array <- new_gen
   print(paste("Generation",i))
 }
 
-test <- init_pop_array[1:2,,]
-test
-rownames(test) <- c() #remove rownames
-colnames(test) <- c() #remove colnames
 
-time <- seq(0, 200, by = 0.1)
-num_individuals <- 2
-X11 <- runif(num_individuals,0,1) #generate starting values where X11+X12 is y1 and so on...
-X12 <- runif(num_individuals,0,1)
-X21 <- runif(num_individuals,0,1)
-X22 <- runif(num_individuals,0,1)
-X31 <- runif(num_individuals,0,1)
-X32 <- runif(num_individuals,0,1)
-state <- array(c(X11,X12,X21,X22,X31,X32),dim = c(num_individuals,6))
-colnames(state) <- c('X11','X12','X21','X22','X31','X32')
-#set starting values
-alpha11=test[,1,1]
-alpha12=test[,1,2]
-alpha21=test[,5,1]
-alpha22=test[,5,2]
-alpha31=test[,9,1]
-alpha32=test[,9,2]
-gamma11=test[,2,1]
-gamma12=test[,2,2]
-gamma21=test[,6,1]
-gamma22=test[,6,2]
-gamma31=test[,10,1]
-gamma32=test[,10,2]
-theta11=test[,3,1]
-theta12=test[,3,2]
-theta21=test[,7,1]
-theta22=test[,7,2]
-theta31=test[,11,1]
-theta32=test[,11,2]
-P11=test[,4,1]
-P12=test[,4,2]
-P21=test[,8,1]
-P22=test[,8,2]
-P31=test[,12,1]
-P32=test[,12,2]
-parameters <-c(alpha11=test[,1,1],alpha12=test[,1,2],alpha21=test[,5,1],alpha22=test[,5,2],
-               alpha31=test[,9,1],alpha32=test[,9,2],
-               gamma11=test[,2,1],gamma12=test[,2,2],gamma21=test[,6,1],gamma22=test[,6,2],
-               gamma31=test[,10,1],gamma32=test[,10,2],
-               theta11=test[,3,1],theta12=test[,3,2],theta21=test[,7,1],theta22=test[,7,2],
-               theta31=test[,11,1],theta32=test[,11,2],
-               P11=test[,4,1],P12=test[,4,2],P21=test[,8,1],P22=test[,8,2],P31=test[,12,1],P32=test[,12,2])
-out <- ode(y=state,times=time,parms=parameters,func = y_model)
-#out order is- individual 1_11,2_11,...,n_11,1_12,2_12,..,n_12,1_21,...
-tail(out)
-#need last output once equilibrium reached
 
 
 
