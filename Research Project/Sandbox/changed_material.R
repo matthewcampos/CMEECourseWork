@@ -224,3 +224,17 @@ y_1 <- (mu$`11` * negative_R_j(X21,X22,theta$`21`,P$`21`)) + (mu$`12` * negative
 y_2 <- (mu$`21` * positive_R_j(X11,X12,theta$`11`,P$`11`)) + (mu$`22` * positive_R_j(X11,X12,theta$`12`,P$`12`))
 y_3 <- (mu$`31` * positive_R_j(X11,X12,theta$`31`,P$`31`)) + (mu$`32` * positive_R_j(X11,X12,theta$`32`,P$`32`))
 
+mutation <- function(new_gen,pr){
+  probability <- runif(1,0,1)
+  if (probability <= pr){
+    individuals <- sample(c(1:dim(new_gen)[1]),size = sample(dim(new_gen)[1]),replace = TRUE)
+    site <- sample(c(1:dim(new_gen)[2]),replace = TRUE)
+    height <- sample(c(1:dim(new_gen)[3]),size = length(individuals),replace = TRUE)
+    new_gen[individuals,site,height] <- runif(1,0,1) 
+  }
+  return(new_gen)
+}
+
+
+
+

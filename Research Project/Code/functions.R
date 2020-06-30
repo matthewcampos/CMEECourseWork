@@ -17,23 +17,39 @@ population <- function(size, locus){
   return(pop)
 }
 
-#Determine fitness function
-fitness <- function(y_1,y_2,y_3){
-  fit <- cbind(y_1,y_2,y_3)
-  fit_sum <- apply(fit,1,sum) #sums across the rows 
-  return(fit_sum)
+#Determine fitness function- normal distribution setting mean and s.d i.e. want trait value to center around 100
+#begin with directional then switch into stabilising i.e. while y_3 > 4 sd from mean fitness = y_3 then once within use dnorm
+#dcauchy
+fitness <- function(y_3,mu_bar,sigma){
+  probabilities <- dcauchy(y_3, location = mu_bar, scale = sigma)
+  return(probabilities)
 }
 
-#Mutation 
-mutation <- function(new_gen,pr){
-  probability <- runif(1,0,1)
-  if (probability <= pr){
-    individuals <- sample(c(1:dim(new_gen)[1]),size = sample(dim(new_gen)[1]),replace = TRUE)
-    site <- sample(c(1:dim(new_gen)[2]),replace = TRUE)
-    height <- sample(c(1:dim(new_gen)[3]),size = length(individuals),replace = TRUE)
-    new_gen[individuals,site,height] <- runif(1,0,1) 
+#Mutation- normal distribution and random determine to add or subtract around current value
+#runif of 2400 (dim of array) and whichever values less than mutation rate undergo mutation
+mutation <- function(new_gen,mutation_rate){
+  mutation_array <- population(size,locus) #create mutation array 
+  #generate runif mutation probabilities for each locus
+  for (i in 1:dim(mutation_array)[1]){
+    for (j in 1:dim(mutation_array)[3]){
+      mutation_array[i,,j] <- sample(runif(locus,0,1),locus,replace = TRUE)
+    }
   }
-  return(new_gen)
+  indices <- which(mutation_array <= mutation_rate, arr.ind = TRUE) #find indices less than mutation rate
+  if (dim(indices)[1] > 0){
+    probability <- runif(dim(indices)[1],0,1) #determine whether to add or subtract
+    subtraction <- which(probability <= 0.5) #indexes (individuals) to subtract 
+    addition <- which(probability > 0.5) 
+    values <- runif(dim(indices)[1],0,init_pop_array[indices]) #values to add or subtract by
+    print(values)
+    if (length(subtraction) > 0){
+      init_pop_array[indices[subtraction]] <- init_pop_array[indices[subtraction]] - values[subtraction]
+    }
+    if (length(addition) > 0){
+      init_pop_array[indices[addition]] <- init_pop_array[indices[addition]] + values[addition]
+   }
+   }
+  return(init_pop_array)
 }
 
 #Recombination- https://www.blackwellpublishing.com/ridley/a-z/Recombination.asp
@@ -45,7 +61,7 @@ recombination <- function(individual){
   return(individual)
 }
 
-#FORMULAS 
+#FORMULAS TO CALCULATE TRAIT VALUES 
 positive_R_j <- function(y,theta,P){
   #calculate R value
   R_j_value <- (y^P)  / ((y^P) + (theta^P))
