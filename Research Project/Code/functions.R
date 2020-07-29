@@ -27,7 +27,8 @@ fitness <- function(y_3,mu_bar,sigma){
 
 #Mutation- normal distribution and random determine to add or subtract around current value
 #runif of 2400 (dim of array) and whichever values less than mutation rate undergo mutation
-mutation <- function(new_gen,mutation_rate){
+#rnorm
+mutation <- function(array,mutation_rate){
   mutation_array <- population(size,locus) #create mutation array 
   #generate runif mutation probabilities for each locus
   for (i in 1:dim(mutation_array)[1]){
@@ -37,19 +38,19 @@ mutation <- function(new_gen,mutation_rate){
   }
   indices <- which(mutation_array <= mutation_rate, arr.ind = TRUE) #find indices less than mutation rate
   if (dim(indices)[1] > 0){
-    probability <- runif(dim(indices)[1],0,1) #determine whether to add or subtract
-    subtraction <- which(probability <= 0.5) #indexes (individuals) to subtract 
-    addition <- which(probability > 0.5) 
-    values <- runif(dim(indices)[1],0,init_pop_array[indices]) #values to add or subtract by
-    print(values)
-    if (length(subtraction) > 0){
-      init_pop_array[indices[subtraction]] <- init_pop_array[indices[subtraction]] - values[subtraction]
-    }
-    if (length(addition) > 0){
-      init_pop_array[indices[addition]] <- init_pop_array[indices[addition]] + values[addition]
+    array[indices] <- pmax(0.1,rnorm(dim(indices)[1],mean=array[indices],sd=0.001)) #values to add or subtract by
    }
-   }
-  return(init_pop_array)
+  return(array)
+}
+
+#max fit individual mutation
+in_mutation <- function(array){
+  mutation_array <- array(sample(runif(locus*3,0,1),locus*2,replace = TRUE), dim=c(dim(array)[1],dim(array)[2]))
+  indices <- which(mutation_array <= mutation_rate, arr.ind = TRUE) #find indices less than mutation rate
+  if (dim(indices)[1] > 0){
+    array[indices] <- pmax(0.1,rnorm(dim(indices)[1],mean=array[indices],sd=0.001)) #values to add or subtract by
+  }
+  return(array)
 }
 
 #Recombination- https://www.blackwellpublishing.com/ridley/a-z/Recombination.asp
@@ -83,6 +84,18 @@ mu_values <- function(alpha, gamma){
   mu <- alpha/gamma
   return(mu)
 }
+
+#MIGRATION 
+migration <- function(array,migrant_array,migration_rate){
+  #matrix to runif values for migrant population- whicever less than or equal to migration rate migrates
+  #pop size of original array kept constant
+  migrant_prob <- matrix(runif(size,0,1),nrow = size, ncol = 1)
+  migrant_individuals <- which(migrant_prob <= migrantion_rate)
+  init_individuals <- sample(size, length(migrant_individuals)) #choose individual to replace by migrants
+  array[init_individuals,,] <- migrant_array[migrant_individuals,,]
+  return(array)
+}
+
 
 
 

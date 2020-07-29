@@ -235,6 +235,69 @@ mutation <- function(new_gen,pr){
   return(new_gen)
 }
 
+names <- rep(c('alpha','gamma','theta','P'),times=locus/2)
+number <- rep(c(11,12,21,22,31,32),each=locus/3)
+variables <- paste0(names,number)
+migrant_variables <- paste0(names,number)
+
+#set the 24 starting values
+#for (m in 1:24){
+#  assign(variables[m],df_pop[,m]) #init_pop
+#  assign(migrant_variables[m],df_migrant_pop[,m]) #migrant_pop
+#}
+
+#track dominance over time- omholt paper- dominance function
+#variance of parameter values
+#each individual has 4 different locus (alpha,gamma,theta,P) and two sets (diploid)- look at values at each locus
+#if ex. alpha11 and alpha12 have different (0.28 and 0.50), thats hetero and use y3 value
+#produce y3 value for 0.28 and 0.28, and 0.50 and 0.50, and get the mean of those 
+#dominance value is y3 values produced (hetero-mean(homo)/abs(hetero-mean(homo)))
+
+dominance <- function(d_array){
+  for (i in 1:dim(init_pop_array)[1]){
+    #set the homozygotes
+    homozygous_1 <- init_pop_array[i,,]
+    homozygous_2 <- init_pop_array[i,,]
+    for (j in 1:dim(homozygous_1)[2]){
+      if (homozygous_1[j,1]!=homozygous_1[j,2]){ #heterozygous if not equal
+        hetero_y_3 <- y_3[i] #y_value of heterozygote
+        #re-distribute values
+        homozygous_1[j,2] <- homozygous_1[j,1] 
+        homozygous_2[j,1] <- homozygous_2[j,2]
+        #collect values
+        homo_1_alpha <- as.data.frame(homozygous_1[c(1,5,9),])
+        homo_1_gamma <- as.data.frame(homozygous_1[c(2,6,10),])
+        homo_1_theta <- as.data.frame(homozygous_1[c(3,7,11),])
+        homo_1_P <- as.data.frame(homozygous_1[c(4,8,12),])
+        homo_2_alpha <- as.data.frame(homozygous_2[c(1,5,9),])
+        homo_2_gamma <- as.data.frame(homozygous_2[c(2,6,10),])
+        homo_2_theta <- as.data.frame(homozygous_2[c(3,7,11),])
+        homo_2_P <- as.data.frame(homozygous_2[c(4,8,12),])
+        #mu values
+        homo_1_mu <- mu_values(homo_1_alpha,homo_1_gamma)
+        homo_2_mu <- mu_values(homo_2_alpha,homo_2_gamma)
+        #y_values
+        #y_3 only affected by locus in position 9 and beyond
+        #homo_1_y_1 <- (homo_1_mu$V1[1] * negative_R_j(y_j$`2`[i],homo_1_theta$V1[2],homo_1_P$V1[2])) + (homo_1_mu$V2[1] * negative_R_j(y_j$`2`[i],homo_1_theta$V2[2],homo_1_P$V2[2]))
+        #homo_1_y_2 <- (homo_1_mu$V1[2] * negative_R_j(y_j$`1`[i],homo_1_theta$V1[1],homo_1_P$V1[1])) + (homo_1_mu$V2[2] * negative_R_j(y_j$`1`[i],homo_1_theta$V2[1],homo_1_P$V2[1]))
+        homo_1_y_3 <- (homo_1_mu$V1[3] * negative_R_j(y_j$`1`[i],homo_1_theta$V1[3],homo_1_P$V1[3])) + (homo_1_mu$V2[3] * negative_R_j(y_j$`1`[i],homo_1_theta$V2[3],homo_1_P$V2[3]))
+        #homo_2_y_1 <- (homo_2_mu$V1[1] * negative_R_j(y_j$`2`[i],homo_2_theta$V1[2],homo_2_P$V1[2])) + (homo_2_mu$V2[1] * negative_R_j(y_j$`2`[i],homo_2_theta$V2[2],homo_2_P$V2[2]))
+        #homo_2_y_2 <- (homo_2_mu$V1[2] * negative_R_j(y_j$`1`[i],homo_2_theta$V1[1],homo_2_P$V1[1])) + (homo_2_mu$V2[2] * negative_R_j(y_j$`1`[i],homo_2_theta$V2[1],homo_2_P$V2[1]))
+        homo_2_y_3 <- (homo_2_mu$V1[3] * negative_R_j(y_j$`1`[i],homo_2_theta$V1[3],homo_2_P$V1[3])) + (homo_2_mu$V2[3] * negative_R_j(y_j$`1`[i],homo_2_theta$V2[3],homo_2_P$V2[3]))
+      }
+      #calculate dominance
+      d <- (hetero_y_3 - mean(homo_1_y_3,homo_2_y_3)) / abs(hetero_y_3 - mean(homo_1_y_3,homo_2_y_3))
+      d_array[i,j] <- d
+    }
+  }
+}
+
+#null simulation- prob is equal for all individuals
+#max fitness individual per generation and 100 SNP mutate it (mutation function) generate new trait value
+#robustness to genetic variation and without migration
+#evolution different if migration per generation (0.01) or every 10 generations (0.1)
+
+
 
 
 
