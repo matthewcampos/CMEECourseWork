@@ -57,5 +57,5 @@ max_speed <- which(fit[,1]>=max(fit[,1]))[1]
 #prediction is that individuals in the beginning should be less robust than the ones at the end 
 y3 <- yvalues.list[[3]][1200]
 which.max(y3[[1]]) #max individual
-
+pop <- pop.list[length(pop.list)]
 

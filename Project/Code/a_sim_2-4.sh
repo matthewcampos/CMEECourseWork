@@ -17,4 +17,4 @@ Rscript --vanilla simulation2.R 500 0.15 2 "heterozygous" "homozygous"
 Rscript --vanilla simulation2.R 500 0.25 2 "heterozygous" "homozygous"
 
 
-echo "Finished"
+echo "Finished a_sim_2-4"

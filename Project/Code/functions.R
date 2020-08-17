@@ -34,9 +34,16 @@ mutation <- function(array,mutation_rate){
     }
   }
   indices <- which(mutation_array <= mutation_rate, arr.ind = TRUE) #find indices less than mutation rate
+  #record old value
+  allele_matrix <<- matrix(NA,nrow = dim(indices)[1],ncol = 2)
   if (dim(indices)[1] > 0){
-    array[indices] <- pmax(0.1,rnorm(dim(indices)[1],mean=array[indices],sd=0.001)) #new value centered around old value
-   }
+    allele_matrix[,1] <<- array[indices]
+    new_values <- pmax(0.1,rnorm(dim(indices)[1],mean=array[indices],sd=0.05))
+    array[indices] <- new_values #new value centered around old value
+    allele_matrix[,2] <<- new_values
+  }else{
+    allele_matrix <<- 0
+  }
   return(array)
 }
 
@@ -56,6 +63,7 @@ migration <- function(array,migrant_array,migration_rate){
   migrant_prob <- matrix(runif(size,0,1),nrow = size, ncol = 1)
   migrant_individuals <- which(migrant_prob <= migration_rate)
   init_individuals <- sample(size, length(migrant_individuals)) #choose individual to replace by migrants
+  column <<- cbind(init_individuals,migrant_individuals)
   array[init_individuals,,] <- migrant_array[migrant_individuals,,]
   return(array)
 }

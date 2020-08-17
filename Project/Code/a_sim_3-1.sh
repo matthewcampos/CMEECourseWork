@@ -16,4 +16,4 @@ Rscript --vanilla simulation3.R 500 0.03 0 "heterozygous" "heterozygous"
 Rscript --vanilla simulation3.R 500 0.05 0 "heterozygous" "heterozygous"
 
 
-echo "Finished"
+echo "Finished a_sim_3-1"
