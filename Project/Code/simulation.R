@@ -133,8 +133,6 @@ for (run in 1:1){
     mig_y3_values <- list(migrant_y_j$`3`)
     #Loop through many generations
     for (i in 1:generations){
-      #replace heading for pop list
-      heading <- paste0("Generation",i)
       #CALCULATE Y FOR CURRENT GENERATION
       #collect values
       alpha <- as.data.frame(init_pop_array[,c(1,5,9),c(1,2)])
@@ -201,7 +199,7 @@ for (run in 1:1){
       init_parents <- init_parents[sample(1:nrow(init_parents), size=size,replace = TRUE),]
       migrant_parents <- migrant_parents[sample(1:nrow(migrant_parents), size=size,replace = TRUE),]
       #List of parents
-      parents.list[[length(parents.list)+1]] <- list(init_parents)
+      parents.list[[length(parents.list)+1]] <- init_parents
       #Next generation population array
       new_gen <- population(size,locus)
       migrant_new_gen <- population(size,locus)
@@ -254,7 +252,7 @@ for (run in 1:1){
       new_gen <- mutation(new_gen,mutation_rate)
       migrant_new_gen <- mutation(migrant_new_gen,mutation_rate)
       #List to record when theres a mutation- record old value
-      allele.mutation.list[[length(allele.mutation.list)+1]] <- list(allele_matrix)
+      allele.mutation.list[[length(allele.mutation.list)+1]] <- allele_matrix
       #Migration after burn-in period
       #if every 10 generations
       if (i > 80 & i<=700){ #burn-in period
@@ -264,7 +262,7 @@ for (run in 1:1){
             chance.record <- c(i,chance.record) #save vector
             local_rate <- runif(1,0.01,0.05) #between 1% and 5% migration rate
             new_gen <- migration(new_gen,migrant_new_gen,migration_rate=local_rate)
-            migrant.list[[length(migrant.list)+1]] <- list(column)
+            migrant.list[[length(migrant.list)+1]] <- column
           }
         }else if (migration_rate > 0){
           if (every == 0){
