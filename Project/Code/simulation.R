@@ -303,11 +303,11 @@ for (run in 1:1){
     pop_file <- paste0(path[run],'/','Population/','Simulation',loop,".rda",sep="")
     save(pop.list,migrantpop.list,file=pop_file)
     parent_file <-paste0(path[run],'/','Parents/','Simulation',loop,".rda",sep="")
-    save(parents.list,file=pop_file)
+    save(parents.list,file=parent_file)
     allele_file <- paste0(path[run],'/','Alleles/','Simulation',loop,".rda",sep="")
-    save(allele.mutation.list,file=pop_file)
+    save(allele.mutation.list,file=allele_file)
     migrant_file <- paste0(path[run],'/','Migrants/','Simulation',loop,".rda",sep="")
-    save(migrant.list,file=pop_file)
+    save(migrant.list,file=migrant_file)
   }
   #dev.off() #close pdf file with all graphs
 }

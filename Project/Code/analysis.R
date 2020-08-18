@@ -4,8 +4,10 @@
 ##__version__ = '0.0.1'
 
 rm(list=ls()) #clear workspace
+source('functions.R')
+library(zeallot) #for assigning variables
 #open data
-rda_list <- list.files(path = "../Results/DIFFGN_50-80",full.names = TRUE)
+rda_list <- list.files(path = "../Results/DIFFGN_50-65",full.names = TRUE)
 for (l in 1:44){
   fit_plot <- dir.create(paste0(rda_list[l],'/','Fit_Plots'), recursive = TRUE)
 }
@@ -17,15 +19,18 @@ title <- paste(rep.gene.title, gene.condition)
 #plot fitness
 for (k in 1:44){
   path <- (paste0(rda_list[k],'/run_1/Fitness/'))
+  pdf(paste0(rda_list[k],'/Fit_plots/',"Plot_of_Simulations.pdf")) #open pdf
+  par(mfrow=c(2,2))
   for (j in 1:30){
     load(paste0(path,'Simulation',j,'.rda'))
-    pdf(paste0(rda_list[k],'/Fit_plots/',"Plot_of_Simulations_",j,".pdf")) #open pdf
-    plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness', main = title[k])
-    dev.off()
+    plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness')
+    mtext(title[k],side = 3, line = -2, outer = TRUE)
   }
+  dev.off()
 }
 
-load("../Results/DIFFGN_50-80/heterozygous-heterozygous_Migration_0-0/run_1/Traits/Simulation15.rda")
+load("../Results/DIFFGN_50-65/heterozygous-heterozygous_Migration_0.5-1/run_1/Traits/Simulation15.rda")
+load("../Results/DIFFGN_50-65/heterozygous-heterozygous_Migration_0.5-1/run_1/Population/Simulation15.rda")
 #how many generations to recover with migration
 mig_effect <- which(fit[,1]<avg_fit) #less than avg
 mig_effect <- mig_effect[-which(mig_effect < 80 | mig_effect > 700)] #within migration generations only
@@ -56,6 +61,22 @@ max_speed <- which(fit[,1]>=max(fit[,1]))[1]
 #       -measuring variance of the trait values 
 #prediction is that individuals in the beginning should be less robust than the ones at the end 
 y3 <- yvalues.list[[3]][1200]
-which.max(y3[[1]]) #max individual
-pop <- pop.list[length(pop.list)]
+y3.max <- which.max(y3[[1]]) #max individual
+ind <- pop.list[[length(pop.list)]][y3.max,,]
+pop.1 <- population(size=13,locus)
+pop.2 <- population(size=13,locus)
+#replicate individual
+for (person  in 1:dim(pop)[1]){
+  pop.1[person,,] <- ind
+  pop.2[person,,] <- ind
+}
+#mutation per site
+for (site in 1:dim(pop)[2]){
+  pop.1[site+1,site,1] <- as.numeric(pop.1[site+1,site,1]) - 0.001
+  pop.2[site+1,site,2] <- as.numeric(pop.2[site+1,site,2]) - 0.001
+}
+#calculate y_values
+mu <- mu_values(pop.1,gamma)
+y_3 <- (mu$`31` * positive_R_j(y_j$`1`,theta$`31`,P$`31`)) + (mu$`32` * positive_R_j(y_j$`1`,theta$`32`,P$`32`))
+
 
