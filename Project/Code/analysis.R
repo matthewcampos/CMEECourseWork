@@ -7,31 +7,23 @@ rm(list=ls()) #clear workspace
 source('functions.R')
 library(zeallot) #for assigning variables
 #open data
-rda_list <- list.files(path = "../Results/DIFFGN_50-65",full.names = TRUE)
-for (l in 1:44){
-  fit_plot <- dir.create(paste0(rda_list[l],'/','Fit_Plots'), recursive = TRUE)
-}
+gndiff.50.65.rda_list <- list.files(path = "../Results/DIFFGN_50-65",full.names = TRUE)
+#gndiff.50.80.rda_list <- list.files(path = "../Results/GNDIFF_50-80",full.names = TRUE)
+#gnsame.50.65.rda_list <- list.files(path = "../Results/GNSAME_50-65",full.names = TRUE)
+#gnsame.50.80.rda_list <- list.files(path = "../Results/GNSAME_50-80",full.names = TRUE)
+
 condition <- c('No Migration', 'Random Migration', 'Migration 1%', 'Migration 3%', 'Migration 5%','Migration 1% Every 5 Gen.','Migration 1% Every 10 Gen.','Migration 3% Every 5 Gen.','Migration 5% Every 5 Gen.','Migration 3% Every 10 Gen.','Migration 5% Every 10 Gen.')
 gene.condition <- rep(condition, times=4)
 gene_title <- c("Heterogenous-Heterogenous","Heterogenous-Homogenous","Homogenous-Heterogenous","Homogenous-Homogenous")
 rep.gene.title <- rep(gene_title,each=length(condition))
 title <- paste(rep.gene.title, gene.condition)
-#plot fitness
-for (k in 1:44){
-  path <- (paste0(rda_list[k],'/run_1/Fitness/'))
-  pdf(paste0(rda_list[k],'/Fit_plots/',"Plot_of_Simulations.pdf")) #open pdf
-  par(mfrow=c(2,2))
-  for (j in 1:30){
-    load(paste0(path,'Simulation',j,'.rda'))
-    plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness')
-    mtext(title[k],side = 3, line = -2, outer = TRUE)
-  }
-  dev.off()
-}
+
 
 load("../Results/DIFFGN_50-65/heterozygous-heterozygous_Migration_0.5-1/run_1/Traits/Simulation15.rda")
-load("../Results/DIFFGN_50-65/heterozygous-heterozygous_Migration_0.5-1/run_1/Population/Simulation15.rda")
+load("../Results/DIFFGN_50-65/heterozygous-heterozygous_Migration_0.5-1/run_1/Fitness/Simulation15.rda")
+recovery.list <- list()
 #how many generations to recover with migration
+avg_fit <- mean(fit[c(70:80),1]) #just before migration
 mig_effect <- which(fit[,1]<avg_fit) #less than avg
 mig_effect <- mig_effect[-which(mig_effect < 80 | mig_effect > 700)] #within migration generations only
 recover <- which(fit[,1]>=avg_fit)
@@ -46,12 +38,12 @@ for (i in 80:700){
     count <- 0
   }
 }
-mean(recovery_time)
+avg_recovery_time <- mean(recovery_time)
 
 #are any migrant alleles maintained- how long do they last at the 700th generation
 
 #speed to reach max 
-max_speed <- which(fit[,1]>=max(fit[,1]))[1]
+max_speed <- which(fit[,1]>=avg_fit)[1]
 
 #migration rates make best genotype more robust- before migration and after
 #       -calculate trait value of best individual
@@ -63,8 +55,8 @@ max_speed <- which(fit[,1]>=max(fit[,1]))[1]
 y3 <- yvalues.list[[3]][1200]
 y3.max <- which.max(y3[[1]]) #max individual
 ind <- pop.list[[length(pop.list)]][y3.max,,]
-pop.1 <- population(size=13,locus)
-pop.2 <- population(size=13,locus)
+pop.1 <- population(size=13,locus) #for mutations in 1st strand
+pop.2 <- population(size=13,locus) #mutations in 2nd strand
 #replicate individual
 for (person  in 1:dim(pop)[1]){
   pop.1[person,,] <- ind
@@ -76,7 +68,15 @@ for (site in 1:dim(pop)[2]){
   pop.2[site+1,site,2] <- as.numeric(pop.2[site+1,site,2]) - 0.001
 }
 #calculate y_values
-mu <- mu_values(pop.1,gamma)
+mu.1 <- mu_values(pop.1[,9,],pop.1[,10,]) #mu of individuals with mutations in 1st strand
+mu.2 <- mu_values(pop.2[,9,],pop.2[,10,]) #mu of individuals with mutations in 2nd strand
 y_3 <- (mu$`31` * positive_R_j(y_j$`1`,theta$`31`,P$`31`)) + (mu$`32` * positive_R_j(y_j$`1`,theta$`32`,P$`32`))
+#combination of anova and regression
+#dataframe to save all those above  
+main.pop.title <- rep(c('Heterogenous','Homogenous'),each=22)
+migrant.pop.title <- rep(c('Heterogenous',"Homogenous",'Heterogenous',"Homogenous"),each=11)
+migration.rate <- rep(c(0,-1,1,3,5,1,1,3,5,3,5),times=4)
+migration.pattern <- rep(c(0,3,0,0,0,2,1,2,2,1,1),times=4)
+result <- data.frame(main.pop.title,migrant.pop.title,migration.rate,migration.pattern,stringsAsFactors = FALSE)
 
 

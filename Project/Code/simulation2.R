@@ -16,7 +16,7 @@ library(zeallot) #for assigning variables
 args = commandArgs(trailingOnly=TRUE)
 #creates directory folder
 subfolder_name <- paste0("run_",c(1:1))
-mainDir <- '../DIFFGN_50-80'
+mainDir <- '../GNDIFF_50-80'
 folder_name <- paste0(args[4],"-",args[5],"_Migration_",args[2],"-",args[3])
 path <- file.path(mainDir,folder_name,subfolder_name)
 for (run in 1:1){
@@ -30,17 +30,17 @@ for (run in 1:1){
   migrant_folder <-dir.create(paste0(path[run],'/','Migrants'), recursive = TRUE)
   #pdf(paste0(path[run],'/',"Plot_of_Simulations.pdf")) #open pdf
   count <- 0 #check that simulation is working 
-  for (loop in 1:30){
+  for (loop in 1:15){
     #keep population size constant
     count <- count + 1
     print(count)
     #ARGUMENTS
     #commnd line inputs
-    size <- as.numeric(500)#as.numeric(args[1]) #population size 
-    migration_rate <- as.numeric(0.05) #as.numeric(args[2]) #0 is none except for every == 5
-    every <- as.numeric(0)#as.numeric(args[3]) #migration 0== every gen, 1== every 10 gen 2== every 5, 3== random
-    hetero_homo <- 'heterozygous'#args[4] #heterogenous or homogenous population
-    mig_hetero_homo <- 'homozygous'  #args[5] #heterogenous or homogenous migrant population
+    size <- as.numeric(args[1]) #population size 
+    migration_rate <- as.numeric(args[2]) #0 is none except for every == 5
+    every <- as.numeric(args[3]) #migration 0== every gen, 1== every 10 gen 2== every 5, 3== random
+    hetero_homo <- args[4] #heterogenous or homogenous population
+    mig_hetero_homo <- args[5] #heterogenous or homogenous migrant population
     chance.record <- c() #vector to save random migration times
     #set variables 
     locus <- 12 #allele sites per strand 
@@ -306,10 +306,10 @@ for (run in 1:1){
     save(pop.list,migrantpop.list,file=pop_file)
     parent_file <-paste0(path[run],'/','Parents/','Simulation',loop,".rda",sep="")
     save(parents.list,file=parent_file)
-    allele_file <- paste0(path[run],'/','Alleles/','Simulation',loop,".rda",sep="")
-    save(allele.mutation.list,file=allele_file)
-    migrant_file <- paste0(path[run],'/','Migrants/','Simulation',loop,".rda",sep="")
-    save(migrant.list,file=migrant_file)
+    #allele_file <- paste0(path[run],'/','Alleles/','Simulation',loop,".rda",sep="")
+    #save(allele.mutation.list,file=allele_file)
+    #migrant_file <- paste0(path[run],'/','Migrants/','Simulation',loop,".rda",sep="")
+    #save(migrant.list,file=migrant_file)
   }
   #dev.off() #close pdf file with all graphs
 }
