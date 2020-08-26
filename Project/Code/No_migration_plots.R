@@ -18,7 +18,7 @@ heterogenous <- c(diff.rda[c(1,2)],diff.rda.2[c(1,2)],same.rda[c(1,2)],same.rda.
 #fitness analysis- mean and SD
 heterogenous.list <- list()
 for (q in 1:length(heterogenous)){
-    for (w in 1:15){
+    for (w in 1:10){
       load(paste0(heterogenous[q],'/run_1/Fitness/Simulation',w,'.rda'))
       heterogenous.list[[length(heterogenous.list)+1]] <- fit[c(80:700),1]
     }
@@ -27,51 +27,39 @@ heterogenous.fitness <- unlist(heterogenous.list)
 homogenous.list <- list()
 homogenous <- c(diff.rda[c(3,4)],diff.rda.2[c(3,4)],same.rda[c(3,4)],same.rda.2[c(3,4)])
 for (z in 1:length(homogenous)){
-    for (x in 1:15){
+    for (x in 1:10){
       load(paste0(homogenous[z],'/run_1/Fitness/Simulation',x,'.rda'))
       homogenous.list[[length(homogenous.list)+1]] <- fit[c(80:700),1]
     }
 }
 homogenous.fitness <- unlist(homogenous.list)
 #Plots
-heterogenous.fit.list <- list()
-for (k in 1:8){
-  path <- (paste0(heterogenous[k],'/run_1/Fitness/'))
-  for (j in 1:15){
-    load(paste0(path,'Simulation',j,'.rda'))
-    heterogenous.fit.list[[length(heterogenous.fit.list)+1]] <- fit
-  }
-  array <- do.call(cbind, heterogenous.fit.list)
-  mean.array <- apply(array, MARGIN = 1,mean, na.rm = TRUE)
-  pdf(paste0("../Results/Avg_Heterogenous_Plot_of_Simulations.pdf")) #open pdf
-  plot(1:length(mean.array),as.numeric(mean.array),type = 'l',xlab = 'Generations', ylab = 'Average Fitness')
-  mtext("Average Fitness Progress of Heterogenous Population",side = 3, line = -2, outer = TRUE)
-  dev.off()
-}
-homogenous.fit.list <- list()
-for (m in 1:8){
-  path <- (paste0(homogenous[m],'/run_1/Fitness/'))
-  for (n in 1:15){
-    load(paste0(path,'Simulation',n,'.rda'))
-    homogenous.fit.list[[length(homogenous.fit.list)+1]] <- fit
-  }
-  homogenous.array <- do.call(cbind, homogenous.fit.list)
-  homogenous.mean.array <- apply(homogenous.array, MARGIN = 1,mean, na.rm = TRUE)
-  pdf(paste0("../Results/Avg_Homogenous_Plot_of_Simulations.pdf")) #open pdf
-  plot(1:length(homogenous.mean.array),as.numeric(homogenous.mean.array),type = 'l',xlab = 'Generations', ylab = 'Average Fitness')
-  mtext("Average Fitness Progress of Homogenous Population",side = 3, line = -2, outer = TRUE)
-  dev.off()
-}
-
 plot.colour <- rainbow(30,start = 0, end = 0.25)
 for (k in 1:8){
   path <- (paste0(heterogenous[k],'/run_1/Fitness/'))
-  pdf(paste0("../Results/Heterogenous_Plot_of_Simulations.pdf")) #open pdf
-  for (j in 1:15){
+  pdf(paste0("../Results/Early_Heterogenous_Plot_of_Simulations.pdf")) #open pdf
+  for (j in 1:10){
     load(paste0(path,'Simulation',j,'.rda'))
     if (j == 1){
       plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness',lty=j,col=plot.colour[j])
-      mtext("Fitness of Heterogenous Population",side = 3, line = -2, outer = TRUE)
+      mtext("Fitness of Heterogenous Population with no Migration",side = 3, line = -2, outer = TRUE)
+    }else{
+      lines(1:length(fit[,1]),fit[,1],type='l',lty=j,col=plot.colour[j])
+    }
+  }
+  dev.off()
+}
+rm(k)
+rm(j)
+plot.colour <- rainbow(30,start = 0.7, end = 0.9)
+for (k in 1:8){
+  path <- (paste0(homogenous[k],'/run_1/Fitness/'))
+  pdf(paste0("../Results/Early_Homogenous_Plot_of_Simulations.pdf")) #open pdf
+  for (j in 1:10){
+    load(paste0(path,'Simulation',j,'.rda'))
+    if (j == 1){
+      plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness',lty=j,col=plot.colour[j],ylim = c(0,1))
+      mtext("Fitness of Homogenous Population with no Migration",side = 3, line = -2, outer = TRUE)
     }else{
       lines(1:length(fit[,1]),fit[,1],type='l',lty=j,col=plot.colour[j])
     }
@@ -79,21 +67,6 @@ for (k in 1:8){
   dev.off()
 }
 
-plot.colour <- rainbow(30,start = 0.7, end = 0.9)
-for (k in 1:8){
-  path <- (paste0(homogenous[k],'/run_1/Fitness/'))
-  pdf(paste0("../Results/Homogenous_Plot_of_Simulations.pdf")) #open pdf
-  for (j in 1:15){
-    load(paste0(path,'Simulation',j,'.rda'))
-    if (j == 1){
-      plot(1:length(fit[,1]),fit[,1],type = 'l',xlab = 'Generations', ylab = 'Fitness',lty=j,col=plot.colour[j])
-      mtext("Fitness of Homogenous Population",side = 3, line = -2, outer = TRUE)
-    }else{
-      lines(1:length(fit[,1]),fit[,1],type='l',lty=j,col=plot.colour[j])
-    }
-  }
-  dev.off()
-}
 
 
                 

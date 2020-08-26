@@ -22,11 +22,9 @@
 * CompileLaTex.sh- convert the tex files to generate thesis pdf in the Results folder
 * thesis.tex- tex file that produces the whole report taking in tex files from Sections folder, references.bib and Titlepage.tex
 * Titlepage.tex- tex file to produce title page
-#####Unix
-* UnixPrac1.txt- first practical which analyses three files from Data directory
 
 **Proposal**
-* folder containing proposal for thesis project 
+* folder containing proposal for thesis project
 
 **Data**- this directory consists of the data used to run the 44 conditions in the code
 * GNDIFF_50-65
@@ -44,7 +42,22 @@
   - Migrants folder- REMOVE COMMENT ON LINE 309 & 310 AND RUN SIMULATION SCRIPTS AS NOT USED IN CURRENT DATA ANALYSIS- rda
 
 **Results**
-
+* Early_Homogenous_Plot_of_Simulation.pdf- plotting fitness of homogenous populations evolving without migration
+* Early_Heterogenous_Plot_of_Simulation.pdf- plotting fitness of heterogenous populations evolving without migration
+* workflow.jpg- image file of the workflow of the simulation for the Appendix
+* robustness_regression.jpg- image file of the regression result of calculated Robustness ratio
+* robustness_anova.pdf- pdf file of table used to show anova of regression results
+* AppendixI_conditions.jpg- image file of the conditions used as input arguments for simulation
+* thesis.pdf- pdf of thesis
+* boxplot_migration.jpg- image file of boxplot comparing speed of network evolution with and without migration
+* Migration_Fitness_plots- folder containing pdf fitness plots for the 4 different genetic variation and environmental distance combinations
+  - GNDIFF_50-65
+    - Plot_of_simulations.pdf
+  - GNDIFF_50-80
+  - GNSAME_50-65
+  - GNSAME_50-65
+* Cauchy_distribution.pdf- pdf showing the cauchy distribution for determining fitness values from trait values
+* Model_diagram.jpg- image file of the two variants of migrant genetic networks
 
 **Sandbox**
 *Cauchy_test.R- visualise cauchy distribution

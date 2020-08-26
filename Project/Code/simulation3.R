@@ -16,7 +16,7 @@ library(zeallot) #for assigning variables
 args = commandArgs(trailingOnly=TRUE)
 #creates directory folder
 subfolder_name <- paste0("run_",c(1:1))
-mainDir <- '../GNSAME_50-65'
+mainDir <- '../migGNSAME_50-65'
 folder_name <- paste0(args[4],"-",args[5],"_Migration_",args[2],"-",args[3])
 path <- file.path(mainDir,folder_name,subfolder_name)
 for (run in 1:1){
@@ -25,12 +25,12 @@ for (run in 1:1){
   fitness_folder <- dir.create(paste0(path[run],'/','Fitness'), recursive = TRUE) #create fitness folder within run folder
   trait_folder <- dir.create(paste0(path[run],'/','Traits'), recursive = TRUE) #create traits folder within run folder
   pop_folder <- dir.create(paste0(path[run],'/','Population'), recursive = TRUE)
-  parent_folder <- dir.create(paste0(path[run],'/','Parents'), recursive = TRUE)
-  allele_folder <- dir.create(paste0(path[run],'/','Alleles'), recursive = TRUE)
-  migrant_folder <-dir.create(paste0(path[run],'/','Migrants'), recursive = TRUE)
+  #parent_folder <- dir.create(paste0(path[run],'/','Parents'), recursive = TRUE)
+  #allele_folder <- dir.create(paste0(path[run],'/','Alleles'), recursive = TRUE)
+  #migrant_folder <-dir.create(paste0(path[run],'/','Migrants'), recursive = TRUE)
   #pdf(paste0(path[run],'/',"Plot_of_Simulations.pdf")) #open pdf
   count <- 0 #check that simulation is working 
-  for (loop in 1:15){
+  for (loop in 1:5){
     #keep population size constant
     count <- count + 1
     print(count)
@@ -64,29 +64,29 @@ for (run in 1:1){
     migrant_pop <- population(size,locus) #migrant
     #Main population
     if (hetero_homo == 'homozygous'){
-      for (p in 1:dim(init_pop_array)[1]){
+      for (p in 1:dim(init_pop_array)[2]){
         for (q in 1:dim(init_pop_array)[3]){
-          init_pop_array[p,,q] <- sample(runif(1,0,0.3),locus,replace = TRUE)
+          init_pop_array[,p,q] <- runif(1,0,0.3)
         }
       }
     }else if (hetero_homo == 'heterozygous'){
-      for (p in 1:dim(init_pop_array)[1]){
+      for (p in 1:dim(init_pop_array)[2]){
         for (q in 1:dim(init_pop_array)[3]){
-          init_pop_array[p,,q] <- sample(runif(locus+5,0,0.3),locus,replace = TRUE)
+          init_pop_array[,p,q] <- runif(dim(init_pop_array)[1],0,0.3)
         }
       }
     }
     #migrant population
     if (mig_hetero_homo == 'homozygous'){
-      for (t in 1:dim(init_pop_array)[1]){
+      for (t in 1:dim(init_pop_array)[2]){
         for (y in 1:dim(init_pop_array)[3]){
-          migrant_pop[t,,y] <- sample(runif(1,0,0.3),locus,replace = TRUE)
+          migrant_pop[,t,y] <- runif(1,0,0.3)
         }
       }
     }else if (mig_hetero_homo == 'heterozygous'){
-      for (t in 1:dim(init_pop_array)[1]){
+      for (t in 1:dim(init_pop_array)[2]){
         for (y in 1:dim(init_pop_array)[3]){
-          migrant_pop[t,,y] <- sample(runif(locus+5,0,0.3),locus,replace = TRUE)
+          migrant_pop[,t,y] <- runif(dim(init_pop_array)[1],0,0.3)
         }
       }
     }
@@ -304,8 +304,8 @@ for (run in 1:1){
     save(w_bar_list,yvalues.list,mig_yvalues.list,file = file)
     pop_file <- paste0(path[run],'/','Population/','Simulation',loop,".rda",sep="")
     save(pop.list,migrantpop.list,file=pop_file)
-    parent_file <-paste0(path[run],'/','Parents/','Simulation',loop,".rda",sep="")
-    save(parents.list,file=parent_file)
+    #parent_file <-paste0(path[run],'/','Parents/','Simulation',loop,".rda",sep="")
+    #save(parents.list,file=parent_file)
     #allele_file <- paste0(path[run],'/','Alleles/','Simulation',loop,".rda",sep="")
     #save(allele.mutation.list,file=allele_file)
     #migrant_file <- paste0(path[run],'/','Migrants/','Simulation',loop,".rda",sep="")

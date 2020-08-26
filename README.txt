@@ -82,3 +82,9 @@
 ###Week 17
 **Sections covered**:
 * Bayesian Statistics
+
+##Thesis Project
+* Project
+
+##Seminar Diaries
+* Seminars 

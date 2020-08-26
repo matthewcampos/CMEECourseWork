@@ -1,0 +1,10 @@
+# README Project
+<ul>pdf and bash script to create seminar diary
+
+##Directory
+#####LaTex
+* CompileLaTex.sh- convert the tex files to generate thesis pdf
+* SeminarJournal.tex- tex file of the 10 diaries
+
+#####PDF
+* SeminarJournal.pdf- pdf version of diary used for submission 
