@@ -26,7 +26,7 @@
 **Proposal**
 * folder containing proposal for thesis project
 
-**Data**- this directory consists of the data used to run the 44 conditions in the code
+**Data**- this directory consists of the data used to run the 44 conditions in the code.
 * GNDIFF_50-65
 * GNDIFF_50-80
 * GNSAME_50-65
@@ -40,6 +40,11 @@
   - Parents folder- REMOVE COMMENT ON LINE 305 & 306 AND RUN SIMULATION SCRIPTS AS NOT USED IN CURRENT DATA ANALYSIS- contains rda files of parent combinations for each generation per simulation.
   - Alleles folder- REMOVE COMMENT ON LINE 307 & 308 AND RUN SIMULATION SCRIPTS AS NOT USED IN CURRENT DATA ANALYSIS- rda file containing the sites that mutated for each generation per simulation
   - Migrants folder- REMOVE COMMENT ON LINE 309 & 310 AND RUN SIMULATION SCRIPTS AS NOT USED IN CURRENT DATA ANALYSIS- rda
+ * To run more simulations per folder, use the following combination of conditions (44 conditions total):
+   - Heterozygous - Heterozygous, Migration rate (0%,1%,3%,5%), Migration patterns (0 (every gen.),1 (every 10 gen.),2 (every 5 gen.))
+   - Heterozygous - Homozygous, Migration rate (0%,1%,3%,5%), Migration patterns (0 (every gen.),1 (every 10 gen.),2 (every 5 gen.))
+   - Homozygous - Heterozygous, Migration rate (0%,1%,3%,5%), Migration patterns (0 (every gen.),1 (every 10 gen.),2 (every 5 gen.))
+   - Homozygous - Homozygous, Migration rate (0%,1%,3%,5%), Migration patterns (0 (every gen.),1 (every 10 gen.),2 (every 5 gen.))
 
 **Results**
 * Early_Homogenous_Plot_of_Simulation.pdf- plotting fitness of homogenous populations evolving without migration
@@ -66,4 +71,4 @@
 
 **Sandbox**
 * Cauchy_test.R- visualise cauchy distribution
-* environment.RData- R environment used for analysis 
+* environment.RData- R environment used for analysis
