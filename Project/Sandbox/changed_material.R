@@ -336,5 +336,22 @@ for (m in 1:8){
   dev.off()
 }
 
+#boxplot to compare migration and w/o migration
+wo.migration <- data.frame(result$migration.rate,result$migration.pattern,result$max.speed,result$avg_fit)
+rm_migration <- which(wo.migration$result.migration.rate==0 & wo.migration$result.migration.pattern==0)
+wo.migration <- wo.migration[rm_migration,] #remove migration
+w.migration <- data.frame(result$migration.rate,result$migration.pattern,result$max.speed,result$avg_fit)
+w.migration <- w.migration[-rm_migration,] #remove no migration
+matrix.both <- as.data.frame(matrix(NA,nrow = 2640,ncol = 3)) #for box plot
+matrix.both[1:240,1] <- "Without Migration"
+matrix.both[241:2640,1] <- "With Migration"
+matrix.both[1:240,2] <- as.numeric(wo.migration$result.max.speed)
+matrix.both[241:2640,2] <- as.numeric(w.migration$result.max.speed)
+matrix.both[1:240,3] <- as.numeric(wo.migration$result.avg_fit)
+matrix.both[241:2640,3] <- as.numeric(w.migration$result.avg_fit)
+matrix.both$V1 <- factor(matrix.both$V1, levels = c('Without Migration','With Migration'))
+boxplot(matrix.both$V2~matrix.both$V1,data = matrix.both,xlab = 'Conditions',ylab = 'Speed to Average Fitness')
+
+
 
 

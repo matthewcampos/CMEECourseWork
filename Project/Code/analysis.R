@@ -20,35 +20,57 @@ folder.list <- list(gndiff.50.65.rda_list,gndiff.50.80.rda_list,gnsame.50.65.rda
 
 #Recovery time of average fitness of runs
 #matrix to save each individual run result
-maxspeed.recovery.matrix <- matrix(NA,nrow = 880,ncol = 4)
-colnames(maxspeed.recovery.matrix) <- c('avg','sd','max speed','avg_fit')
+maxspeed.recovery.matrix <- matrix(NA,nrow = 880,ncol = 2)
+colnames(maxspeed.recovery.matrix) <- c('avg','sd')
 for (i in 1:4){
   rda_list <- folder.list[[i]]
   recovery.list <- list()
   recovery.sd.list <-list()
-  maxspeed.list <- list()
-  maxspeed.val.list <- list()
   for (j in 1:44){
     persim.recovery.list <- list()
     persim.recovery.sd.list <-list()
-    persim.maxspeed.list <- list()
-    persim.maxspeed.val.list <- list()
     for (k in 1:5){
       load(paste0(rda_list[j],'/run_1/Fitness/Simulation',k,'.rda'))
-      avg_fit <- mean(fit[c(70:79),1]) #just before migration
-      max_speed <- which(fit[,1]>=avg_fit[1]) #speed to reach max
-      mig_effect <- which(fit[,1]<avg_fit) #less than avg
-      mig_effect <- mig_effect[-which(mig_effect < 80 | mig_effect > 700)] #within migration generations only
-      recover <- which(fit[,1]>=avg_fit)
-      recover <- recover[-which(recover < 80 | recover > 700)] #within migration generations only
+      mig_effect <- c()
+      recover <- c()
+      for (l in 80:700){
+        if (j<=5 | j>11 & j<=16| j>22 & j<=27| j>33 & j<=38){
+          values <- sort(fit[(l-10):(l-1),1]) #just before migration- every generation
+          avg_fit <- mean(values[(length(values)-5):length(values)]) #mean of top five values
+          if (fit[l,1] < avg_fit){ #less than avg
+            mig_effect <- c(mig_effect,l)
+          }else{
+            recover <- c(recover,l)
+          }
+        }else if(j==6|j==8|j==9|j==17|j==19|j==20|j==28|j==30|j==31|j==39|j==41|j==42){
+          values <- sort(fit[(l-25):(l-1),1]) #just before migration- every 5 generations
+          avg_fit <- mean(values[(length(values)-4):length(values)]) #mean of top five values
+          if (fit[l,1] < avg_fit){ #less than avg
+            mig_effect <- c(mig_effect,l)
+          }else{
+            recover <- c(recover,l)
+          }
+        }else if(j==7|j==10|j==11|j==18|j==21|j==22|j==29|j==32|j==33|j==40|j==43|j==44){
+          values <- sort(fit[(l-50):(l-1),1]) #just before migration- every 10 generations
+          avg_fit <- mean(values[(length(values)-4):length(values)]) #mean of top five values
+          if (fit[l,1] < avg_fit){ #less than avg
+            mig_effect <- c(mig_effect,l)
+          }else{
+            recover <- c(recover,l)
+          }
+        }
+      }
       recovery_time <- c()
       count <- 0 
-      for (l in 80:700){
-        if (length(which(mig_effect==l))>0){
-          count <- count + 1 #every instance fitness is below avg 
-        }else{
-          recovery_time <- c(recovery_time,count)
-          count <- 0
+      if (length(mig_effect)>0){
+        for (time in length(mig_effect):2){
+          
+          if (mig_effect[time] - mig_effect[time - 1] == 1){
+            count <- count + 1 #every instance fitness is below avg 
+          }else{
+            recovery_time <- c(recovery_time,count)
+            count <- 0
+          }
         }
       }
       if (is.null(recovery_time)==TRUE){
@@ -56,35 +78,23 @@ for (i in 1:4){
       }
       persim.recovery.list[[length(persim.recovery.list)+1]] <- mean(recovery_time)
       persim.recovery.sd.list[[length(persim.recovery.sd.list)+1]] <- sd(recovery_time)
-      persim.maxspeed.list[[length(persim.maxspeed.list)+1]] <- as.numeric(which(fit[,1]>=avg_fit)[1])
-      persim.maxspeed.val.list[[length(persim.maxspeed.val.list)+1]] <- avg_fit
     }
     recovery.list[[length(recovery.list)+1]] <- persim.recovery.list
     recovery.sd.list[[length(recovery.sd.list)+1]] <- persim.recovery.sd.list
-    maxspeed.list[[length(maxspeed.list)+1]] <- persim.maxspeed.list
-    maxspeed.val.list[[length(maxspeed.val.list)+1]] <- persim.maxspeed.val.list
   }
   #saves matrix of the 4 environmental/genetic conditions
   if (i == 1){
     maxspeed.recovery.matrix[1:220,1] <- as.numeric(unlist(persim.recovery.list)) 
     maxspeed.recovery.matrix[1:220,2] <- as.numeric(unlist(persim.recovery.sd.list))
-    maxspeed.recovery.matrix[1:220,3] <- as.numeric(unlist(persim.maxspeed.list))
-    maxspeed.recovery.matrix[1:220,4] <- as.numeric(unlist(persim.maxspeed.val.list))
   }else if (i == 2){
     maxspeed.recovery.matrix[221:440,1] <- as.numeric(unlist(persim.recovery.list)) 
     maxspeed.recovery.matrix[221:440,2] <- as.numeric(unlist(persim.recovery.list))
-    maxspeed.recovery.matrix[221:440,3] <- as.numeric(unlist(persim.maxspeed.list))
-    maxspeed.recovery.matrix[221:440,4] <- as.numeric(unlist(persim.maxspeed.val.list))
   }else if (i == 3){
     maxspeed.recovery.matrix[441:660,1] <- as.numeric(unlist(persim.recovery.list)) 
     maxspeed.recovery.matrix[441:660,2] <- as.numeric(unlist(persim.recovery.list))
-    maxspeed.recovery.matrix[441:660,3] <- as.numeric(unlist(persim.maxspeed.list))
-    maxspeed.recovery.matrix[441:660,4] <- as.numeric(unlist(persim.maxspeed.val.list))
   }else if (i == 4){
     maxspeed.recovery.matrix[661:880,1] <- as.numeric(unlist(persim.recovery.list)) 
     maxspeed.recovery.matrix[661:880,2] <- as.numeric(unlist(persim.recovery.list))
-    maxspeed.recovery.matrix[661:880,3] <- as.numeric(unlist(persim.maxspeed.list))
-    maxspeed.recovery.matrix[661:880,4] <- as.numeric(unlist(persim.maxspeed.val.list))
   }
 }
 
@@ -99,7 +109,7 @@ for (m in 1:4){
     check <- check + 1
     print(check)
     check.2 <- 0
-    ratio.matrix <- matrix(NA,nrow = 15,ncol = 1)
+    ratio.matrix <- matrix(NA,nrow = 5,ncol = 1)
     for (p in 1:5){
       check.2 <-check.2 + 1
       print(check.2)
@@ -243,9 +253,9 @@ for (m in 1:4){
 #dataframe to save all those above  
 main.pop.title <- rep(c('Heterozygous','Homozygous'),each=440)
 migrant.pop.title <- rep(c('Heterozygous',"Homozygous",'Heterozygous',"Homozygous"),each=220)
-migration.rate <- rep(c(0,-1,1,3,5,1,1,3,5,3,5),each=4)
-migration.pattern <- rep(c(0,3,0,0,0,2,1,2,2,1,1),each=4)
-result <- data.frame(main.pop.title,migrant.pop.title,migration.rate,migration.pattern),all.ratio.matrix,maxspeed.recovery.matrix)
+migration.rate <- rep(c(0,0,0,0,0,-1,-1,-1,-1,-1,1,1,1,1,1,3,3,3,3,3,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3,5,5,5,5,5,3,3,3,3,3,5,5,5,5,5),times=16)
+migration.pattern <- rep(c(0,0,0,0,0,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1),times=16)
+result <- data.frame(main.pop.title,migrant.pop.title,migration.rate,migration.pattern,all.ratio.matrix,maxspeed.recovery.matrix)
 
 #fitness variation during migration periods
 wmigration.fitness.list <- list()
@@ -254,7 +264,7 @@ for (v in 1:4){
   list <- folder.list[[v]]
   migration.rda <- list[-c(1,12,23,34)]
   for (z in 1:length(migration.rda)){
-    for (x in 1:15){
+    for (x in 1:5){
       load(paste0(migration.rda[z],'/run_1/Fitness/Simulation',x,'.rda'))
       wmigration.fitness.list[[length(wmigration.fitness.list)+1]] <- fit[c(80:700),1]
     }
@@ -265,46 +275,32 @@ for (a in 1:4){
   list <- folder.list[[a]]
   womigration.rda <- list[c(1,12,23,34)]
   for (q in 1:length(womigration.rda)){
-    for (w in 1:15){
+    for (w in 1:5){
       load(paste0(womigration.rda[q],'/run_1/Fitness/Simulation',w,'.rda'))
       womigration.fitness.list[[length(womigration.fitness.list)+1]] <- fit[c(80:700),1]
     }
   }
 }
 womigration.fitness <- unlist(womigration.fitness.list)
-#boxplot to compare migration and w/o migration
-wo.migration <- data.frame(result$migration.rate,result$migration.pattern,result$max.speed,result$avg_fit)
-rm_migration <- which(wo.migration$result.migration.rate==0 & wo.migration$result.migration.pattern==0)
-wo.migration <- wo.migration[rm_migration,] #remove migration
-w.migration <- data.frame(result$migration.rate,result$migration.pattern,result$max.speed,result$avg_fit)
-w.migration <- w.migration[-rm_migration,] #remove no migration
-matrix.both <- as.data.frame(matrix(NA,nrow = 2640,ncol = 3)) #for box plot
-matrix.both[1:240,1] <- "Without Migration"
-matrix.both[241:2640,1] <- "With Migration"
-matrix.both[1:240,2] <- as.numeric(wo.migration$result.max.speed)
-matrix.both[241:2640,2] <- as.numeric(w.migration$result.max.speed)
-matrix.both[1:240,3] <- as.numeric(wo.migration$result.avg_fit)
-matrix.both[241:2640,3] <- as.numeric(w.migration$result.avg_fit)
-matrix.both$V1 <- factor(matrix.both$V1, levels = c('Without Migration','With Migration'))
-boxplot(matrix.both$V2~matrix.both$V1,data = matrix.both,xlab = 'Conditions',ylab = 'Speed to Average Fitness')
 
 #recovery times
 recovery.result <- data.frame(result$migration.rate,result$migration.pattern,result$avg)
 #diffgn environ. distance of 15 
-mean(recovery.result$result.avg[1:660])
-sd(recovery.result$result.avg[1:660])
+mean(recovery.result$result.avg[1:220])
+sd(recovery.result$result.avg[1:220])
 #diffgn environ. distance of 30
-mean(recovery.result$result.avg[661:1320])
-sd(recovery.result$result.avg[661:1320])
+mean(recovery.result$result.avg[221:440])
+sd(recovery.result$result.avg[221:440])
 #samegn environ. distance of 15 
-mean(recovery.result$result.avg[1321:1980])
-sd(recovery.result$result.avg[1321:1980])
+mean(recovery.result$result.avg[441:660])
+sd(recovery.result$result.avg[441:660])
 #samegn environ. distance of 30
-mean(recovery.result$result.avg[1981:2640])
-sd(recovery.result$result.avg[1981:2640])
+mean(recovery.result$result.avg[661:880])
+sd(recovery.result$result.avg[661:880])
 
 #ANOVA of robustness
 #remove random migration
+
 no.random.result <- result[-which(result$migration.rate==-1 & result$migration.pattern==3),]
 no.random.result$main.pop.title <- as.factor(no.random.result$main.pop.title)
 no.random.result$migrant.pop.title <- as.factor(no.random.result$migrant.pop.title)
@@ -312,46 +308,25 @@ no.random.result$migration.rate <- as.factor(no.random.result$migration.rate)
 no.random.result$migration.pattern <- as.factor(no.random.result$migration.pattern)
 regression.test <- lm(log(Ratio)~migration.rate*migration.pattern+main.pop.title*migrant.pop.title,data=no.random.result)
 anova.result <- anova(regression.test)
-mr.regression <- lm(log(Ratio)~migration.rate,data=no.random.result)
 mp.regression <- lm(log(Ratio)~migration.pattern,data=no.random.result)
 pdf("../Results/robustness_anova.pdf",height=7.5,width = 12)
 grid.table(anova.result)
 dev.off()
-plot(log(Ratio)~migration.rate,data=no.random.result,ylab = 'Robustness Ratio',xlab='Migration Rates')
-mtext("Regression Analysis of Robustness Ratio and Migration Rate",side = 3, line = -2, outer = TRUE)
-abline(lm(log(Ratio)~migration.rate,data=no.random.result),col='red')
-#plot(log(Ratio)~migration.pattern,data=no.random.result,ylab = 'Robustness Ratio',xlab='Migration Pattern')
-#mtext("Regression Analysis of Robustness Ratio and Migration Pattern",side = 3, line = -2, outer = TRUE)
-#abline(lm(log(Ratio)~migration.pattern,data=no.random.result),col='blue')
+#preliminary checks
+plot(mp.regression) #check qq plot
+BARTLETT <- bartlett.test(log(Ratio)~migration.pattern, data = no.random.result) #check for homogeniety of 
+pdf("../Results/bartlett_anova.pdf",height=7.5,width = 12)
+grid.table(as.data.frame(unlist(BARTLETT)))
+dev.off()
+plot(log(Ratio)~migration.pattern,data=no.random.result,ylab = 'Robustness Ratio',xlab='Migration Pattern')
+mtext("Regression Analysis of Robustness Ratio and Migration Pattern",side = 3, line = -2, outer = TRUE)
+abline(lm(log(Ratio)~migration.pattern,data=no.random.result),col='red')
+TUKEY <- TukeyHSD(aov(mp.regression)) #HSD test to see which interactions within pattern is significant
+pdf("../Results/tukey_anova.pdf",height=7.5,width = 12)
+grid.table(as.data.frame(unlist(TUKEY)))
+dev.off()
 
-TUKEY <- TukeyHSD(aov(mr.regression))
 
-#plot of anova result
-which(no.random.result$migration.rate==0)
-#plotting CI and mean
-nomigration<- no.random.result$Ratio[which(no.random.result$migration.rate==0)]
-nomigration<-log(nomigration)
-nomigration.se <- sd(nomigration)/sqrt(length(nomigration))
-nomigration.ci <- c(mean(nomigration)-1.96*nomigration.se,mean(nomigration)+1.96*nomigration.se)
-migration1 <- no.random.result$Ratio[which(no.random.result$migration.rate==1)]
-migration1 <- log(migration1)
-migration1.se <- sd(migration1)/sqrt(length(migration1))
-migration1.ci <- c(mean(migration1)-1.96*migration1.se,mean(migration1)+1.96*migration1.se)
-migration3 <- no.random.result$Ratio[which(no.random.result$migration.rate==3)]
-migration3 <- log(migration3)
-migration3.se <- sd(migration3)/sqrt(length(migration3))
-migration3.ci <- c(mean(migration3)-1.96*migration3.se,mean(migration3)+1.96*migration3.se)
-migration5 <- no.random.result$Ratio[which(no.random.result$migration.rate==5)]
-migration5 <- log(migration5)
-migration5.se <- sd(migration5)/sqrt(length(migration5))
-migration5.ci <- c(mean(migration5)-1.96*migration5.se,mean(migration5)+1.96*migration5.se)
-confidence.matrix <- matrix(NA,nrow = 4,ncol = 4)
-confidence.matrix[,1] <-c(0,1,3,5)
-confidence.matrix[,2] <- c(mean(nomigration),mean(migration1),mean(migration3),mean(migration5))
-confidence.matrix[,3] <- c(nomigration.ci[1],migration1.ci[1],migration3.ci[1],migration5.ci[1])
-confidence.matrix[,4] <- c(nomigration.ci[2],migration1.ci[2],migration3.ci[2],migration5.ci[2])
-plotCI(confidence.matrix[,1],confidence.matrix[,2],ui = confidence.matrix[,4],li = confidence.matrix[,3],xlab='Migration Rates',ylab='Robustness Ratio')
-mtext("Interval Plot of Robustness Ratio vs. Migration Rate",side = 3, line = -2, outer = TRUE)
 
 
 

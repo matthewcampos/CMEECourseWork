@@ -12,6 +12,7 @@
 \usepackage[font=scriptsize,labelfont=bf]{caption}
 \usepackage{csvsimple}
 \usepackage{amssymb}
+\usepackage[title]{appendix}
 \usepackage{textgreek}
 \usepackage{amsmath}
 \usepackage{harvard}
@@ -20,7 +21,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[CE]{Model Selection in Microbial Population Growth}
+
 
 \linespread{1.25}
 
@@ -46,17 +47,19 @@ I would like to firstly thank Dr. Scott Rifkin for being a wonderful supervisor 
 \section{Introduction}
 \input{Sections/Introduction}
 
+\newpage
+
 \section{Methods}
 \input{Sections/Methods}
 
 \section{Results}
-\input{Sections/Results}
+
 
 \section{Discussion}
-\input{Sections/Discussion}
+
 
 \section{Concluding remarks and looking forward}
-\input{Sections/Conclusion}
+
 
 \newpage
 
@@ -71,18 +74,23 @@ All code can be found in the GitHub Repository:\\
 
 \newpage
 
-\section{Appendix I}
-Starting conditions for simulations
+\begin{appendices}
+\section{Permuations of Conditions}
+\textbf{Description:} The different combinations of conditions used for data sorting and simulations. Data folders are permutations of Genetic structure and Environmental distance i.e. Same and 30 (Main population 50 and Migrant population 80). Within each folder are 44 combinations of starting genetic makeup of populations, migration rate and migration pattern for the simulations. For example, within Same and 30 is: homogenous - heterogenous, 3%, every generation.
 \begin{table}[h]
 \centering
-\includegraphics[scale=0.80]{../Results/AppendixI_conditions.jpg}
+\includegraphics[scale=0.40]{../Results/AppendixI_conditions.jpg}
 \end{table}
 
-\section{Appendix II}
-Simulation workflow
+\newpage
+
+\section{Computer Program Workflow}
+\textbf{Description:} Workflow of R script of simulation program and the logic behind the design of the simulation.
 \begin{figure}[h]
 \centering
-    \includegraphics[width=0.8\textwidth]{../Results/workflow.jpg}
+    \includegraphics[width=0.9\textwidth]{../Results/workflow.jpg}
 \end{figure}
+
+\end{appendices}
 
 \end{document}

@@ -48,8 +48,9 @@ for (l in 1:4){
     check.2 <- check.2 + 1
     print(check.2)
     path <- (paste0(folder.list[[l]][k],'/run_1/Fitness/'))
+    par(mar = c(5,4,4,8))
     name.fit <- paste0('fit.list.',k)
-    for (j in 1:15){
+    for (j in 1:5){
       check.3 <- check.3 + 1
       print(check.3)
       load(paste0(path,'Simulation',j,'.rda')) #loads simulations
@@ -63,7 +64,7 @@ for (l in 1:4){
     }
     lines(1:length(mean.array),as.numeric(mean.array),type='l',lty=k,col=plot.colour[[l]][k]) #adds other 43 runs
     mtext(plot.title.names[l],side = 3, line = -2, outer = TRUE)
-    legend("bottomright", legend = legend.title,col=plot.colour[[l]], lty=1:44, cex=0.4)
+    legend("right",xpd=TRUE,horiz=FALSE,inset=c(-0.2,-0.2), bty="n",legend = legend.title,col=plot.colour[[l]], lty=1:44, cex=0.4)
   }
   dev.off()
 }
