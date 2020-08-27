@@ -46,10 +46,15 @@
 * Early_Heterogenous_Plot_of_Simulation.pdf- plotting fitness of heterogenous populations evolving without migration
 * workflow.jpg- image file of the workflow of the simulation for the Appendix
 * robustness_regression.jpg- image file of the regression result of calculated Robustness ratio
+* boxplot_recovery_time.jpg- image file of boxplot to compare recovery times per condition
 * robustness_anova.pdf- pdf file of table used to show anova of regression results
 * AppendixI_conditions.jpg- image file of the conditions used as input arguments for simulation
-* thesis.pdf- pdf of thesis
-* boxplot_migration.jpg- image file of boxplot comparing speed of network evolution with and without migration
+* workflow.jpg- image file of workflow of simulation
+* Campos_Matthew_CMEE_2020.pdf- pdf of thesis
+* tukey_anova.pdf- pdf of post-hoc tukey test result after anova analysis
+* bartlett_anova.pdf- pdf of bartlett test to conduct anova test on regression
+* qq_plot.jpg- image file of Q-Q plot for anova test
+* robustness_anova.pdf- anova result of regression test of migration pattern effect on robustness ratio
 * Migration_Fitness_plots- folder containing pdf fitness plots for the 4 different genetic variation and environmental distance combinations
   - GNDIFF_50-65
     - Plot_of_simulations.pdf
@@ -60,4 +65,5 @@
 * Model_diagram.jpg- image file of the two variants of migrant genetic networks
 
 **Sandbox**
-*Cauchy_test.R- visualise cauchy distribution
+* Cauchy_test.R- visualise cauchy distribution
+* environment.RData- R environment used for analysis 

@@ -48,12 +48,13 @@ for (l in 1:4){
     check.2 <- check.2 + 1
     print(check.2)
     path <- (paste0(folder.list[[l]][k],'/run_1/Fitness/'))
-    par(mar = c(5,4,4,8))
+    par(mar = c(5,4,4,8)) #leave space in right for legend 
     name.fit <- paste0('fit.list.',k)
     for (j in 1:5){
       check.3 <- check.3 + 1
       print(check.3)
       load(paste0(path,'Simulation',j,'.rda')) #loads simulations
+      fitness[[length(fitness)+1]] <- fit[,1]
       name.fit[[j]] <- fit #adds 15 fit runs per conditions to each list
     }
     array <- do.call(cbind, name.fit) #converts to an array

@@ -32,7 +32,7 @@
 \newpage
 
 \section{Declaration}
-All raw data collected were from the simulation I created for my project. The simulation requires the input of genetic model systems, and mathematical equations used to derive output. The model system and equations used in the simulation were sourced from the work of \textit{Omholt et al,} and \textit{Gjuvsland et al}. I was reponsible for data processing, cleaning and analysis. All analyses presented in the paper are from the simulations, with the help of my supervisor.
+All raw data collected were from the simulation I created for my project. The simulation requires the input of genetic model systems, and mathematical equations used to derive output. The model system and equations used in the simulation were sourced from the work of \textit{Omholt et al} (2000) and \textit{Gjuvsland et al} (2007). I was reponsible for data processing, cleaning and analysis. All analyses presented in the paper are from the simulations, with the help of my supervisor.
 
 \section{Acknowledgements}
 I would like to firstly thank Dr. Scott Rifkin for being a wonderful supervisor and guiding me throughout the project. This includes understanding background knowledge, results and overall research purposes. Secondly, thank you to Dr. Thomas Bell for agreeing to be my internal supervisor, making sure I am aware of the process of the project and ensuring my safety during such difficult times. Also to Dr. Samraat Pawar and Dr. James Rosindell for co-leading a challenging but rewarding CMEE course.
@@ -41,6 +41,7 @@ I would like to firstly thank Dr. Scott Rifkin for being a wonderful supervisor 
 \newpage
 
 \section{Abstract}
+Studies have shown how the role of genotypic evolution on phenotype. How simple alterations in the pathways can lead to pronounced differences in species morphology. Using the genetic model of \textit{Omholt et al}(2000) and \textit{Gjuvsland et al}(2007), I investigate the interplay between gene flow and adaptive processes in the development of a genetic network showing a balance between selection, a strong driver towards canalisation of the network, and gene flow which attempts to homogenise the populations, with the expectation that long temporal periods of evolution with gene flow should lead to a more canalised network compared to without gene flow. Canalisation is represented by fitness values, which are determined by trait values. Heterozygosity in the population has been shown to drive fitness and quickly lead to canalisation while homogeneity relies on chance beneficial mutations, recombination or migrant allele values to become robust. The results show a possible effect that migratory pattern has on the canalisation of a network, and how it is network development could be context dependent. Outcomes from this study can be used to better understand phenotype-genotype relationships and the patterns that drive the development of species.
 
 \newpage
 
@@ -52,13 +53,18 @@ I would like to firstly thank Dr. Scott Rifkin for being a wonderful supervisor 
 \section{Methods}
 \input{Sections/Methods}
 
+\newpage
+
 \section{Results}
+\input{Sections/Results}
 
 
 \section{Discussion}
+\input{Sections/Discussion}
 
 
 \section{Concluding remarks and looking forward}
+\input{Sections/Conclusion}
 
 
 \newpage
@@ -76,7 +82,7 @@ All code can be found in the GitHub Repository:\\
 
 \begin{appendices}
 \section{Permuations of Conditions}
-\textbf{Description:} The different combinations of conditions used for data sorting and simulations. Data folders are permutations of Genetic structure and Environmental distance i.e. Same and 30 (Main population 50 and Migrant population 80). Within each folder are 44 combinations of starting genetic makeup of populations, migration rate and migration pattern for the simulations. For example, within Same and 30 is: homogenous - heterogenous, 3%, every generation.
+\textbf{Description:} The different combinations of conditions used for data sorting and simulations. Data folders are permutations of Genetic structure and Environmental distance i.e. Same and 30 (Main population 50 and Migrant population 80). Within each folder are 44 combinations of starting genetic makeup of populations, migration rate and migration pattern for the simulations. For example, within Same and 30 is: homogenous - heterogenous, 3\%, every generation.
 \begin{table}[h]
 \centering
 \includegraphics[scale=0.40]{../Results/AppendixI_conditions.jpg}
@@ -89,6 +95,15 @@ All code can be found in the GitHub Repository:\\
 \begin{figure}[h]
 \centering
     \includegraphics[width=0.9\textwidth]{../Results/workflow.jpg}
+\end{figure}
+
+\newpage
+
+\section{Tests for One-way Analysis of Variance on Regression of the log Robustness Ratio and Migration Pattern}
+\textbf{Description:} Multiple regression was conducted to see if any of the independent variables (and interactions among them) had a statistically significant effect on the log Robustness ratio. Graph (a) is a normal Q-Q plot to check if the distribution of the data was normal, with no large outliers. Distribution shows that it is a normal around the centre of the distribution however deviates a little at the ends, suggesting it is fat-tailed. This is to be expected with migrant allele values that are evolving far from the trait value. (b) is a Bartlett test conducted to see if there is homogeneity in the variances. A p-value of 0.32 so variances are equal. After conducting analysis of variance test of log Robustness ratio and Migration pattern, (c) is the post hoc Tukey test which shows no statistical significance of any particular migration pattern and the log Robust ratio.
+\begin{figure}[h]
+\centering
+    \includegraphics[width=0.9\textwidth]{../Results/anova_checks.jpg}
 \end{figure}
 
 \end{appendices}

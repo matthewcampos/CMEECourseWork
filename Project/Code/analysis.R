@@ -283,6 +283,7 @@ for (a in 1:4){
 }
 womigration.fitness <- unlist(womigration.fitness.list)
 
+recovery.matrix <- data.frame(matrix(NA,nrow=880,ncol = 2))
 #recovery times
 recovery.result <- data.frame(result$migration.rate,result$migration.pattern,result$avg)
 #diffgn environ. distance of 15 
@@ -297,10 +298,20 @@ sd(recovery.result$result.avg[441:660])
 #samegn environ. distance of 30
 mean(recovery.result$result.avg[661:880])
 sd(recovery.result$result.avg[661:880])
-
+#boxplot
+recovery.matrix[1:220,1] <- 1
+recovery.matrix[1:220,2] <-recovery.result$result.avg[1:220]
+recovery.matrix[221:440,1] <- 2
+recovery.matrix[221:440,2] <-recovery.result$result.avg[221:440]
+recovery.matrix[441:660,1] <- 3
+recovery.matrix[441:660,2] <- recovery.result$result.avg[441:660]
+recovery.matrix[661:880,1] <- 4
+recovery.matrix[661:880,2] <- recovery.result$result.avg[661:880]
+boxplot(recovery.matrix[,2]~recovery.matrix[,1],ylab = 'Recovery Time',xlab = 'Condition',main='Boxplot showing Recovery Time per Condition',cex.main=1.0)
+legend('topright',legend = c('1 = Diff. w/ E.D 15','2 = Diff. w/ E.D 30','3 = Same w/ E.D 15','4 = Same w/ E.D 30'),cex=0.8)
+#ANOVA of recovery times
 #ANOVA of robustness
 #remove random migration
-
 no.random.result <- result[-which(result$migration.rate==-1 & result$migration.pattern==3),]
 no.random.result$main.pop.title <- as.factor(no.random.result$main.pop.title)
 no.random.result$migrant.pop.title <- as.factor(no.random.result$migrant.pop.title)
@@ -318,9 +329,12 @@ BARTLETT <- bartlett.test(log(Ratio)~migration.pattern, data = no.random.result)
 pdf("../Results/bartlett_anova.pdf",height=7.5,width = 12)
 grid.table(as.data.frame(unlist(BARTLETT)))
 dev.off()
+
 plot(log(Ratio)~migration.pattern,data=no.random.result,ylab = 'Robustness Ratio',xlab='Migration Pattern')
 mtext("Regression Analysis of Robustness Ratio and Migration Pattern",side = 3, line = -2, outer = TRUE)
 abline(lm(log(Ratio)~migration.pattern,data=no.random.result),col='red')
+legend("bottom",xpd=TRUE,horiz=TRUE,inset=c(-0.2,-0.2), bty="n",legend = c("0 = Every gen.","1 = Every 10 gen","2 = Every 5 gen"), cex=0.8)
+
 TUKEY <- TukeyHSD(aov(mp.regression)) #HSD test to see which interactions within pattern is significant
 pdf("../Results/tukey_anova.pdf",height=7.5,width = 12)
 grid.table(as.data.frame(unlist(TUKEY)))
